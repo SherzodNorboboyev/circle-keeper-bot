@@ -1,0 +1,36 @@
+services:
+  db:
+    image: postgres:16
+    container_name: networking_bot_postgres
+    environment:
+      POSTGRES_DB: networking_bot
+      POSTGRES_USER: networking_bot
+      POSTGRES_PASSWORD: networking_bot
+    ports:
+      - "5432:5432"
+    volumes:
+      - networking_bot_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U networking_bot -d networking_bot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  bot:
+    build: .
+    container_name: networking_bot_app
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://networking_bot:networking_bot@db:5432/networking_bot
+      USE_WEBHOOK: "false"
+      HOST: 0.0.0.0
+      PORT: 8080
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+
+volumes:
+  networking_bot_postgres_data:

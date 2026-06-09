@@ -1,0 +1,23 @@
+{
+  "menu.add_person": "Добавить человека",
+  "menu.list_people": "Список людей",
+  "menu.search": "Поиск",
+  "menu.birthdays": "Дни рождения",
+  "menu.relationships": "Связи",
+  "menu.excel": "Excel импорт/экспорт",
+  "menu.backup": "Backup / Export",
+  "menu.settings": "Настройки",
+  "menu.change_language": "Изменить язык",
+  "start.choose_language": "Выберите язык:",
+  "start.welcome": "Здравствуйте, {first_name}! Выберите нужный раздел в главном меню.",
+  "language.changed": "Язык изменён.",
+  "help.text": "Этот бот предназначен для ведения личной networking-базы: профили людей, связи, напоминания о днях рождения, backup и Excel импорт/экспорт. Доступные команды: /start, /help, /language.",
+  "error.required_field": "Это поле обязательно.",
+  "error.cancelled": "Действие отменено.",
+  "common.cancel": "Отмена",
+  "common.back": "Назад",
+  "common.skip": "Пропустить",
+  "common.save": "Сохранить",
+  "common.yes": "Да",
+  "common.no": "Нет"
+}

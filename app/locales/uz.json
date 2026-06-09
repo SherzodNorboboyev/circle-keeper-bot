@@ -1,0 +1,23 @@
+{
+  "menu.add_person": "Odam qo‘shish",
+  "menu.list_people": "Odamlarni ko‘rish",
+  "menu.search": "Qidirish",
+  "menu.birthdays": "Tug‘ilgan kunlar",
+  "menu.relationships": "Aloqalar",
+  "menu.excel": "Excel import/export",
+  "menu.backup": "Backup / Export",
+  "menu.settings": "Sozlamalar",
+  "menu.change_language": "Tilni o‘zgartirish",
+  "start.choose_language": "Tilni tanlang:",
+  "start.welcome": "Assalomu alaykum, {first_name}! Asosiy menyudan kerakli bo‘limni tanlang.",
+  "language.changed": "Til o‘zgartirildi.",
+  "help.text": "Bu bot shaxsiy networking bazangizni yuritish, odamlar profili, aloqalar, tug‘ilgan kun eslatmalari, backup va Excel import/export uchun mo‘ljallangan. Mavjud komandalar: /start, /help, /language.",
+  "error.required_field": "Bu maydon majburiy.",
+  "error.cancelled": "Amal bekor qilindi.",
+  "common.cancel": "Bekor qilish",
+  "common.back": "Ortga",
+  "common.skip": "O‘tkazib yuborish",
+  "common.save": "Saqlash",
+  "common.yes": "Ha",
+  "common.no": "Yo‘q"
+}

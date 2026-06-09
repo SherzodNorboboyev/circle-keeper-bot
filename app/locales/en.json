@@ -1,0 +1,23 @@
+{
+  "menu.add_person": "Add person",
+  "menu.list_people": "People list",
+  "menu.search": "Search",
+  "menu.birthdays": "Birthdays",
+  "menu.relationships": "Relationships",
+  "menu.excel": "Excel import/export",
+  "menu.backup": "Backup / Export",
+  "menu.settings": "Settings",
+  "menu.change_language": "Change language",
+  "start.choose_language": "Choose a language:",
+  "start.welcome": "Hello, {first_name}! Choose a section from the main menu.",
+  "language.changed": "Language changed.",
+  "help.text": "This bot helps you manage your personal networking database: people profiles, relationships, birthday reminders, backup, and Excel import/export. Available commands: /start, /help, /language.",
+  "error.required_field": "This field is required.",
+  "error.cancelled": "Action cancelled.",
+  "common.cancel": "Cancel",
+  "common.back": "Back",
+  "common.skip": "Skip",
+  "common.save": "Save",
+  "common.yes": "Yes",
+  "common.no": "No"
+}
