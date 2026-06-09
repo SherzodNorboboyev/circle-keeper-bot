@@ -57,3 +57,50 @@ class AuditService:
             old_value=old_value,
             new_value=new_value,
         )
+
+    async def log_relationship_created(
+        self,
+        user_id: int,
+        relationship_id: int,
+        new_value: dict[str, Any],
+    ) -> None:
+        await self.repository.create(
+            user_id=user_id,
+            action="relationship.created",
+            entity_type="relationship",
+            entity_id=relationship_id,
+            old_value=None,
+            new_value=new_value,
+        )
+
+    async def log_relationship_updated(
+        self,
+        user_id: int,
+        relationship_id: int,
+        old_value: dict[str, Any],
+        new_value: dict[str, Any],
+    ) -> None:
+        await self.repository.create(
+            user_id=user_id,
+            action="relationship.updated",
+            entity_type="relationship",
+            entity_id=relationship_id,
+            old_value=old_value,
+            new_value=new_value,
+        )
+
+    async def log_relationship_deleted(
+        self,
+        user_id: int,
+        relationship_id: int,
+        old_value: dict[str, Any],
+        new_value: dict[str, Any],
+    ) -> None:
+        await self.repository.create(
+            user_id=user_id,
+            action="relationship.deleted",
+            entity_type="relationship",
+            entity_id=relationship_id,
+            old_value=old_value,
+            new_value=new_value,
+        )

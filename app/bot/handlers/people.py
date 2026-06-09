@@ -30,10 +30,12 @@ from app.bot.states.people_states import (
 )
 from app.db.models import Person, User
 from app.db.repositories.people import PeopleRepository
+from app.db.repositories.relationships import RelationshipsRepository
 from app.services.audit_service import AuditService
 from app.services.backup_trigger import BackupTriggerService
 from app.services.i18n import I18nService
 from app.services.people_service import PeopleService, PeopleValidationError
+from app.services.relationship_service import RelationshipService
 
 router = Router(name="people")
 
@@ -137,7 +139,19 @@ async def add_person_start(
     )
 
 
-@router.message(StateFilter(AddPersonStates.last_name, AddPersonStates.middle_name, AddPersonStates.phone, AddPersonStates.telegram_username, AddPersonStates.birth_date, AddPersonStates.note, AddPersonStates.relationship_offer, AddPersonStates.confirm), F.text.in_(BACK_TEXTS))
+@router.message(
+    StateFilter(
+        AddPersonStates.last_name,
+        AddPersonStates.middle_name,
+        AddPersonStates.phone,
+        AddPersonStates.telegram_username,
+        AddPersonStates.birth_date,
+        AddPersonStates.note,
+        AddPersonStates.relationship_offer,
+        AddPersonStates.confirm,
+    ),
+    F.text.in_(BACK_TEXTS),
+)
 async def add_person_back(
     message: Message,
     state: FSMContext,
@@ -618,8 +632,10 @@ async def view_person_callback(
     service = PeopleService()
 
     await callback.message.edit_text(
-        render_person_profile(
+        await render_person_profile(
             person=person,
+            session=session,
+            user_id=current_user.id,
             i18n=i18n,
             lang=lang,
             service=service,
@@ -630,26 +646,6 @@ async def view_person_callback(
             lang=lang,
         ),
     )
-    await callback.answer()
-
-
-@router.callback_query(F.data.startswith("people:relationship:"))
-async def relationship_hook_callback(
-    callback: CallbackQuery,
-    i18n: I18nService,
-    lang: str,
-) -> None:
-    await callback.message.answer(i18n.t("person.relationships_placeholder", lang=lang))
-    await callback.answer()
-
-
-@router.callback_query(F.data.startswith("people:add_child:"))
-async def add_child_hook_callback(
-    callback: CallbackQuery,
-    i18n: I18nService,
-    lang: str,
-) -> None:
-    await callback.message.answer(i18n.t("person.add_child_placeholder", lang=lang))
     await callback.answer()
 
 
@@ -1098,8 +1094,10 @@ async def edit_person_save(
         reply_markup=main_menu_keyboard(i18n=i18n, lang=lang),
     )
     await callback.message.answer(
-        render_person_profile(
+        await render_person_profile(
             person=updated_person,
+            session=session,
+            user_id=current_user.id,
             i18n=i18n,
             lang=lang,
             service=service,
@@ -1241,7 +1239,9 @@ async def delete_person_confirm(
     person_id = int(data["person_id"])
 
     repository = PeopleRepository(session)
-    service = PeopleService()
+    relationships_repository = RelationshipsRepository(session)
+    people_service = PeopleService()
+    relationship_service = RelationshipService()
 
     person = await repository.get_person_by_id(
         user_id=current_user.id,
@@ -1253,7 +1253,16 @@ async def delete_person_confirm(
         await callback.answer()
         return
 
-    old_value = service.person_to_dict(person)
+    old_person_value = people_service.person_to_dict(person)
+
+    active_relationships = await relationships_repository.list_relationships_for_person(
+        user_id=current_user.id,
+        person_id=person_id,
+    )
+    old_relationship_values = [
+        relationship_service.relationship_to_dict(relationship)
+        for relationship in active_relationships
+    ]
 
     deleted_person = await repository.soft_delete_person(
         user_id=current_user.id,
@@ -1265,7 +1274,12 @@ async def delete_person_confirm(
         await callback.answer()
         return
 
-    await service.run_after_person_deleted_hooks(
+    deleted_relationships = await relationships_repository.soft_delete_relationships_for_person(
+        user_id=current_user.id,
+        person_id=person_id,
+    )
+
+    await people_service.run_after_person_deleted_hooks(
         user_id=current_user.id,
         person_id=deleted_person.id,
     )
@@ -1274,15 +1288,26 @@ async def delete_person_confirm(
     await audit_service.log_person_deleted(
         user_id=current_user.id,
         person_id=deleted_person.id,
-        old_value=old_value,
-        new_value=service.person_to_dict(deleted_person),
+        old_value=old_person_value,
+        new_value=people_service.person_to_dict(deleted_person),
     )
+
+    for old_value, deleted_relationship in zip(old_relationship_values, deleted_relationships, strict=False):
+        await audit_service.log_relationship_deleted(
+            user_id=current_user.id,
+            relationship_id=deleted_relationship.id,
+            old_value=old_value,
+            new_value=relationship_service.relationship_to_dict(deleted_relationship),
+        )
 
     backup_trigger = BackupTriggerService()
     await backup_trigger.trigger_user_backup(
         user_id=current_user.id,
         reason="person.deleted",
-        metadata={"person_id": deleted_person.id},
+        metadata={
+            "person_id": deleted_person.id,
+            "deleted_relationship_ids": [relationship.id for relationship in deleted_relationships],
+        },
     )
 
     await state.clear()
@@ -1645,8 +1670,10 @@ def render_person_preview(
     return "\n".join(rendered_rows) if rendered_rows else "—"
 
 
-def render_person_profile(
+async def render_person_profile(
     person: Person,
+    session: AsyncSession,
+    user_id: int,
     i18n: I18nService,
     lang: str,
     service: PeopleService,
@@ -1662,6 +1689,15 @@ def render_person_profile(
             age=age,
         )
 
+    relationship_service = RelationshipService()
+    relationship_lines = await relationship_service.get_profile_relationship_lines(
+        session=session,
+        user_id=user_id,
+        person_id=person.id,
+        i18n=i18n,
+        lang=lang,
+    )
+
     rows = [
         f"👤 {service.format_full_name(person)}",
         f"📛 {i18n.t('person.field.nickname', lang=lang)}: {person.nickname or '—'}",
@@ -1674,8 +1710,13 @@ def render_person_profile(
         f"🎓 {i18n.t('person.field.education_place', lang=lang)}: {person.education_place or '—'}",
         f"📝 {i18n.t('person.field.note', lang=lang)}: {person.note or '—'}",
         "",
-        i18n.t("person.relationships_placeholder", lang=lang),
+        i18n.t("person.relationships_title", lang=lang),
     ]
+
+    if relationship_lines:
+        rows.extend(relationship_lines)
+    else:
+        rows.append(i18n.t("relationship.empty", lang=lang))
 
     return "\n".join(rows)
 
