@@ -41,6 +41,11 @@ class Settings(BaseSettings):
 
     DB_ECHO: bool = False
 
+    ENABLE_SCHEDULER: bool = False
+    REMINDER_CHECK_INTERVAL_MINUTES: int = 5
+    REMINDER_SCHEDULER_LOOKBACK_MINUTES: int = 10
+    REMINDER_SCRIPT_LOOKBACK_MINUTES: int = 1440
+
     @field_validator("DATABASE_URL")
     @classmethod
     def normalize_database_url(cls, value: str) -> str:
@@ -107,6 +112,17 @@ class Settings(BaseSettings):
             ZoneInfo(value)
         except ZoneInfoNotFoundError as exc:
             raise ValueError(f"Unknown timezone: {value}") from exc
+        return value
+
+    @field_validator(
+        "REMINDER_CHECK_INTERVAL_MINUTES",
+        "REMINDER_SCHEDULER_LOOKBACK_MINUTES",
+        "REMINDER_SCRIPT_LOOKBACK_MINUTES",
+    )
+    @classmethod
+    def validate_positive_minutes(cls, value: int) -> int:
+        if value < 1:
+            raise ValueError("Reminder minute settings must be greater than zero.")
         return value
 
     @model_validator(mode="after")

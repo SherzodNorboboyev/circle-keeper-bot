@@ -11,7 +11,7 @@ from app.services.audit_service import AuditService
 from app.services.backup_trigger import BackupTriggerService
 from app.services.people_service import PeopleService
 from app.services.relationship_service import RelationshipService, RelationshipValidationError
-from app.services.reminder_trigger import ReminderTriggerService
+from app.services.reminder_service import ReminderService
 
 
 @dataclass(frozen=True)
@@ -19,6 +19,7 @@ class ChildCreationResult:
     parent: Person
     child: Person
     relationship: Relationship
+    reminder_count: int
 
 
 class ChildService:
@@ -82,13 +83,15 @@ class ChildService:
             new_value=relationship_service.relationship_to_dict(relationship),
         )
 
+        reminder_count = 0
+
         if child.birth_month and child.birth_day:
-            reminder_trigger = ReminderTriggerService()
-            await reminder_trigger.trigger_default_birthday_reminder(
+            reminders = await ReminderService().ensure_default_birthday_reminders_for_person(
+                session=session,
                 user_id=user_id,
-                person_id=child.id,
-                reason="child.created",
+                person=child,
             )
+            reminder_count = len(reminders)
 
         backup_trigger = BackupTriggerService()
         await backup_trigger.trigger_user_backup(
@@ -98,6 +101,7 @@ class ChildService:
                 "parent_person_id": parent.id,
                 "child_person_id": child.id,
                 "relationship_id": relationship.id,
+                "reminder_count": reminder_count,
             },
         )
 
@@ -105,6 +109,7 @@ class ChildService:
             parent=parent,
             child=child,
             relationship=relationship,
+            reminder_count=reminder_count,
         )
 
     @staticmethod

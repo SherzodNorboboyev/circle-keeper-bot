@@ -15,9 +15,10 @@ from app.bot.middlewares.auth import CurrentUserMiddleware
 from app.bot.middlewares.db import DatabaseSessionMiddleware
 from app.bot.middlewares.i18n import I18nMiddleware
 from app.config import Settings, get_settings
-from app.db.session import close_engine, init_db
+from app.db.session import close_engine, get_session_maker, init_db
 from app.logging import setup_logging
 from app.services.i18n import I18nService
+from app.services.scheduler_service import SchedulerService
 
 
 async def health_handler(request: web.Request) -> web.Response:
@@ -120,18 +121,33 @@ async def main() -> None:
 
     i18n = I18nService(default_lang=settings.DEFAULT_LANGUAGE)
     dispatcher = setup_dispatcher(settings=settings, i18n=i18n)
+    session_maker = get_session_maker()
 
     bot = Bot(
         token=settings.bot_token,
         default=DefaultBotProperties(parse_mode=ParseMode.HTML),
     )
 
+    scheduler_service: SchedulerService | None = None
+
     try:
+        if settings.ENABLE_SCHEDULER:
+            scheduler_service = SchedulerService(
+                bot=bot,
+                session_maker=session_maker,
+                interval_minutes=settings.REMINDER_CHECK_INTERVAL_MINUTES,
+                lookback_minutes=settings.REMINDER_SCHEDULER_LOOKBACK_MINUTES,
+            )
+            scheduler_service.start()
+
         if settings.USE_WEBHOOK:
             await run_webhook(bot=bot, dispatcher=dispatcher, settings=settings)
         else:
             await run_polling(bot=bot, dispatcher=dispatcher, settings=settings)
     finally:
+        if scheduler_service is not None:
+            scheduler_service.shutdown()
+
         await close_engine()
         await bot.session.close()
 

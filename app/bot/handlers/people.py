@@ -31,11 +31,13 @@ from app.bot.states.people_states import (
 from app.db.models import Person, User
 from app.db.repositories.people import PeopleRepository
 from app.db.repositories.relationships import RelationshipsRepository
+from app.db.repositories.reminders import RemindersRepository
 from app.services.audit_service import AuditService
 from app.services.backup_trigger import BackupTriggerService
 from app.services.i18n import I18nService
 from app.services.people_service import PeopleService, PeopleValidationError
 from app.services.relationship_service import RelationshipService
+from app.services.reminder_service import ReminderService
 
 router = Router(name="people")
 
@@ -493,11 +495,20 @@ async def add_person_save(
         new_value=service.person_to_dict(person),
     )
 
+    reminders = await ReminderService(i18n=i18n).ensure_default_birthday_reminders_for_person(
+        session=session,
+        user_id=current_user.id,
+        person=person,
+    )
+
     backup_trigger = BackupTriggerService()
     await backup_trigger.trigger_user_backup(
         user_id=current_user.id,
         reason="person.created",
-        metadata={"person_id": person.id},
+        metadata={
+            "person_id": person.id,
+            "reminder_count": len(reminders),
+        },
     )
 
     await state.clear()
@@ -506,6 +517,11 @@ async def add_person_save(
         i18n.t("person.saved", lang=lang),
         reply_markup=main_menu_keyboard(i18n=i18n, lang=lang),
     )
+
+    if reminders:
+        await callback.message.answer(
+            i18n.t("reminder.default_created", lang=lang, count=len(reminders)),
+        )
 
     if data.get("relationship_offer"):
         await callback.message.answer(i18n.t("person.relationship_offer_after_save", lang=lang))
@@ -1080,6 +1096,13 @@ async def edit_person_save(
         new_value=new_value,
     )
 
+    if updated_person.birth_month and updated_person.birth_day:
+        await ReminderService(i18n=i18n).ensure_default_birthday_reminders_for_person(
+            session=session,
+            user_id=current_user.id,
+            person=updated_person,
+        )
+
     backup_trigger = BackupTriggerService()
     await backup_trigger.trigger_user_backup(
         user_id=current_user.id,
@@ -1240,6 +1263,7 @@ async def delete_person_confirm(
 
     repository = PeopleRepository(session)
     relationships_repository = RelationshipsRepository(session)
+    reminders_repository = RemindersRepository(session)
     people_service = PeopleService()
     relationship_service = RelationshipService()
 
@@ -1278,6 +1302,10 @@ async def delete_person_confirm(
         user_id=current_user.id,
         person_id=person_id,
     )
+    disabled_reminder_count = await reminders_repository.disable_reminders_for_person(
+        user_id=current_user.id,
+        person_id=person_id,
+    )
 
     await people_service.run_after_person_deleted_hooks(
         user_id=current_user.id,
@@ -1307,6 +1335,7 @@ async def delete_person_confirm(
         metadata={
             "person_id": deleted_person.id,
             "deleted_relationship_ids": [relationship.id for relationship in deleted_relationships],
+            "disabled_reminder_count": disabled_reminder_count,
         },
     )
 
