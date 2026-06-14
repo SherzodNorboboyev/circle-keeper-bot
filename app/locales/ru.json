@@ -217,5 +217,43 @@
   "settings.change_days_before": "Изменить количество дней",
   "settings.enable_on_day": "Включить reminder сегодня",
   "settings.disable_on_day": "Отключить reminder сегодня",
-  "settings.language_hint": "Чтобы изменить язык, используйте команду /language."
+  "settings.language_hint": "Чтобы изменить язык, используйте команду /language.",
+  
+  "backup.export_choose_format": "Выберите формат backup.",
+  "backup.export_success": "Backup отправлен: {filename}",
+  "backup.export_failed": "Ошибка при отправке backup.",
+  "backup.auto_failed": "Ошибка при отправке backup. Данные сохранены в database, но backup файл не был отправлен.",
+
+  "restore.ask_file": "Отправьте JSON backup файл.",
+  "restore.invalid_file": "Backup файл неверный. Принимается только .json файл с корректными schema_version и checksum.",
+  "restore.preview": "Restore preview:\n\nДата backup: {generated_at}\nЛюди: {people_count}\nRelationships: {relationships_count}\nReminders: {reminders_count}\nSchema version: {schema_version}\n\nRestore mode: replace_all",
+  "restore.completed": "Restore завершён.\n\nЛюди: {people_count}\nRelationships: {relationships_count}\nReminders: {reminders_count}",
+  "restore.cancelled": "Restore отменён.",
+
+  "excel.template_ready": "Excel import template готов.",
+  "excel.ask_file": "Отправьте заполненный .xlsx файл.",
+  "excel.invalid_extension": "Принимается только .xlsx файл.",
+  "excel.file_too_large": "Файл слишком большой. Максимальный размер: 5 MB.",
+  "excel.import_preview": "Import preview:\n\nЛюди: {people_count}\nRelationships: {relationships_count}\nChild relationships: {children_count}\nВозможные duplicates: {duplicate_count}\nОшибки: {error_count}\n\nImport mode: {import_mode}\n\nПродолжить?",
+  "excel.import_completed": "Excel import завершён.\n\nИмпортировано людей: {people_count}\nИмпортировано relationships: {relationships_count}\nПропущено duplicate людей: {skipped_duplicates_count}",
+  "excel.import_failed": "Excel import не выполнен.",
+  "excel.error_report_ready": "Report по ошибкам import готов.",
+  "excel.export_ready": "Excel export готов.",
+  "excel.no_data": "Нет active данных для export.",
+
+  "import.errors.REQUIRED_FIELD_MISSING": "Обязательное поле не заполнено.",
+  "import.errors.DUPLICATE_PERSON_KEY": "person_key повторяется.",
+  "import.errors.INVALID_DATE_FORMAT": "Неверный формат даты.",
+  "import.errors.UNKNOWN_CATEGORY": "Неизвестное значение категории.",
+  "import.errors.CUSTOM_CATEGORY_REQUIRED": "Custom категория обязательна.",
+  "import.errors.INVALID_RELATIONSHIP_TYPE": "Неверный тип relationship.",
+  "import.errors.CUSTOM_LABEL_REQUIRED": "Custom label обязателен.",
+  "import.errors.PERSON_KEY_NOT_FOUND": "person_key не найден.",
+  "import.errors.INVALID_CHILD_RELATIONSHIP": "Parent и child не могут быть одним человеком.",
+  "import.errors.FORMULA_NOT_ALLOWED": "Formula или текст, похожий на formula, запрещены.",
+  "import.errors.DUPLICATE_PERSON_POSSIBLE": "Есть вероятность duplicate человека.",
+
+  "hello": "Привет",
+  "welcome": "Добро пожаловать",
+  "missing.key": "Перевод не найден"
 }

@@ -17,6 +17,7 @@ from app.bot.middlewares.i18n import I18nMiddleware
 from app.config import Settings, get_settings
 from app.db.session import close_engine, get_session_maker, init_db
 from app.logging import setup_logging
+from app.services.backup_trigger import configure_backup_trigger, shutdown_backup_trigger
 from app.services.i18n import I18nService
 from app.services.scheduler_service import SchedulerService
 
@@ -128,6 +129,13 @@ async def main() -> None:
         default=DefaultBotProperties(parse_mode=ParseMode.HTML),
     )
 
+    configure_backup_trigger(
+        session_maker=session_maker,
+        bot=bot,
+        debounce_seconds=45,
+        default_language=settings.DEFAULT_LANGUAGE,
+    )
+
     scheduler_service: SchedulerService | None = None
 
     try:
@@ -145,6 +153,8 @@ async def main() -> None:
         else:
             await run_polling(bot=bot, dispatcher=dispatcher, settings=settings)
     finally:
+        await shutdown_backup_trigger()
+
         if scheduler_service is not None:
             scheduler_service.shutdown()
 

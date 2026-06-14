@@ -217,5 +217,43 @@
   "settings.change_days_before": "Change days before",
   "settings.enable_on_day": "Enable on-day reminder",
   "settings.disable_on_day": "Disable on-day reminder",
-  "settings.language_hint": "Use /language to change language."
+  "settings.language_hint": "Use /language to change language.",
+  
+  "backup.export_choose_format": "Choose backup format.",
+  "backup.export_success": "Backup sent: {filename}",
+  "backup.export_failed": "Failed to send backup.",
+  "backup.auto_failed": "Failed to send backup. Your data was saved in the database, but the backup file was not sent.",
+
+  "restore.ask_file": "Send a JSON backup file.",
+  "restore.invalid_file": "Invalid backup file. Only a .json file with valid schema_version and checksum is accepted.",
+  "restore.preview": "Restore preview:\n\nBackup date: {generated_at}\nPeople: {people_count}\nRelationships: {relationships_count}\nReminders: {reminders_count}\nSchema version: {schema_version}\n\nRestore mode: replace_all",
+  "restore.completed": "Restore completed.\n\nPeople: {people_count}\nRelationships: {relationships_count}\nReminders: {reminders_count}",
+  "restore.cancelled": "Restore cancelled.",
+
+  "excel.template_ready": "Excel import template is ready.",
+  "excel.ask_file": "Send the completed .xlsx file.",
+  "excel.invalid_extension": "Only .xlsx files are accepted.",
+  "excel.file_too_large": "File is too large. Maximum size: 5 MB.",
+  "excel.import_preview": "Import preview:\n\nPeople: {people_count}\nRelationships: {relationships_count}\nChild relationships: {children_count}\nPossible duplicates: {duplicate_count}\nErrors: {error_count}\n\nImport mode: {import_mode}\n\nContinue?",
+  "excel.import_completed": "Excel import completed.\n\nImported people: {people_count}\nImported relationships: {relationships_count}\nSkipped duplicate people: {skipped_duplicates_count}",
+  "excel.import_failed": "Excel import failed.",
+  "excel.error_report_ready": "Import error report is ready.",
+  "excel.export_ready": "Excel export is ready.",
+  "excel.no_data": "There is no active data to export.",
+
+  "import.errors.REQUIRED_FIELD_MISSING": "Required field is missing.",
+  "import.errors.DUPLICATE_PERSON_KEY": "person_key is duplicated.",
+  "import.errors.INVALID_DATE_FORMAT": "Invalid date format.",
+  "import.errors.UNKNOWN_CATEGORY": "Unknown category value.",
+  "import.errors.CUSTOM_CATEGORY_REQUIRED": "Custom category is required.",
+  "import.errors.INVALID_RELATIONSHIP_TYPE": "Invalid relationship type.",
+  "import.errors.CUSTOM_LABEL_REQUIRED": "Custom label is required.",
+  "import.errors.PERSON_KEY_NOT_FOUND": "person_key was not found.",
+  "import.errors.INVALID_CHILD_RELATIONSHIP": "Parent and child cannot be the same person.",
+  "import.errors.FORMULA_NOT_ALLOWED": "Formula or formula-like text is not allowed.",
+  "import.errors.DUPLICATE_PERSON_POSSIBLE": "Possible duplicate person detected.",
+
+  "hello": "Hello",
+  "welcome": "Welcome",
+  "missing.key": "Translation not found"
 }

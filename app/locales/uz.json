@@ -217,5 +217,43 @@
   "settings.change_days_before": "Kunlar sonini o‘zgartirish",
   "settings.enable_on_day": "Bugungi reminder yoqish",
   "settings.disable_on_day": "Bugungi reminder o‘chirish",
-  "settings.language_hint": "Tilni o‘zgartirish uchun /language komandasidan foydalaning."
+  "settings.language_hint": "Tilni o‘zgartirish uchun /language komandasidan foydalaning.",
+  
+  "backup.export_choose_format": "Backup formatini tanlang.",
+  "backup.export_success": "Backup yuborildi: {filename}",
+  "backup.export_failed": "Backup yuborishda xatolik yuz berdi.",
+  "backup.auto_failed": "Backup yuborishda xatolik yuz berdi. Ma’lumotlar database’da saqlandi, lekin backup fayl yuborilmadi.",
+
+  "restore.ask_file": "JSON backup faylni yuboring.",
+  "restore.invalid_file": "Backup fayl noto‘g‘ri. Faqat to‘g‘ri schema_version va checksumga ega .json fayl qabul qilinadi.",
+  "restore.preview": "Restore preview:\n\nBackup sanasi: {generated_at}\nOdamlar: {people_count}\nRelationshiplar: {relationships_count}\nReminderlar: {reminders_count}\nSchema version: {schema_version}\n\nRestore rejimi: replace_all",
+  "restore.completed": "Restore tugadi.\n\nOdamlar: {people_count}\nRelationshiplar: {relationships_count}\nReminderlar: {reminders_count}",
+  "restore.cancelled": "Restore bekor qilindi.",
+
+  "excel.template_ready": "Excel import template tayyor.",
+  "excel.ask_file": "To‘ldirilgan .xlsx faylni yuboring.",
+  "excel.invalid_extension": "Faqat .xlsx fayl qabul qilinadi.",
+  "excel.file_too_large": "Fayl hajmi juda katta. Maksimal hajm: 5 MB.",
+  "excel.import_preview": "Import preview:\n\nOdamlar: {people_count}\nRelationshiplar: {relationships_count}\nFarzand relationshiplari: {children_count}\nDuplicate ehtimollari: {duplicate_count}\nXatolar: {error_count}\n\nImport rejimi: {import_mode}\n\nDavom etasizmi?",
+  "excel.import_completed": "Excel import tugadi.\n\nImport qilingan odamlar: {people_count}\nImport qilingan relationshiplar: {relationships_count}\nO‘tkazib yuborilgan duplicate odamlar: {skipped_duplicates_count}",
+  "excel.import_failed": "Excel import bajarilmadi.",
+  "excel.error_report_ready": "Import xatolari bo‘yicha report tayyor.",
+  "excel.export_ready": "Excel export tayyor.",
+  "excel.no_data": "Export qilish uchun active ma’lumotlar yo‘q.",
+
+  "import.errors.REQUIRED_FIELD_MISSING": "Majburiy maydon to‘ldirilmagan.",
+  "import.errors.DUPLICATE_PERSON_KEY": "person_key takrorlangan.",
+  "import.errors.INVALID_DATE_FORMAT": "Sana formati noto‘g‘ri.",
+  "import.errors.UNKNOWN_CATEGORY": "Kategoriya qiymati noma’lum.",
+  "import.errors.CUSTOM_CATEGORY_REQUIRED": "Custom kategoriya majburiy.",
+  "import.errors.INVALID_RELATIONSHIP_TYPE": "Relationship turi noto‘g‘ri.",
+  "import.errors.CUSTOM_LABEL_REQUIRED": "Custom label majburiy.",
+  "import.errors.PERSON_KEY_NOT_FOUND": "person_key topilmadi.",
+  "import.errors.INVALID_CHILD_RELATIONSHIP": "Parent va child bir xil bo‘lishi mumkin emas.",
+  "import.errors.FORMULA_NOT_ALLOWED": "Formula yoki formula ko‘rinishidagi matn ruxsat etilmaydi.",
+  "import.errors.DUPLICATE_PERSON_POSSIBLE": "Duplicate odam ehtimoli mavjud.",
+  
+  "hello": "Salom",
+  "welcome": "Xush kelibsiz",
+  "missing.key": "Tarjima topilmadi"
 }

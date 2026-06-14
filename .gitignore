@@ -205,3 +205,5 @@ credentials/
 !logs/.gitkeep
 !backups/.gitkeep
 !exports/.gitkeep
+
+scripts/*
