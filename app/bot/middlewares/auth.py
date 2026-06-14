@@ -45,6 +45,11 @@ class CurrentUserMiddleware(BaseMiddleware):
         )
 
         data["current_user"] = current_user
+
+        if not current_user.is_active:
+            await self._answer_inactive_user(event)
+            return None
+
         return await handler(event, data)
 
     @staticmethod
@@ -56,3 +61,17 @@ class CurrentUserMiddleware(BaseMiddleware):
             return event.message.chat.id
 
         return fallback_chat_id
+
+    @staticmethod
+    async def _answer_inactive_user(event: TelegramObject) -> None:
+        text = "Profilingiz vaqtincha bloklangan. Administrator bilan bog‘laning."
+
+        if isinstance(event, Message):
+            await event.answer(text)
+            return
+
+        if isinstance(event, CallbackQuery):
+            await event.answer(text, show_alert=True)
+
+            if event.message and hasattr(event.message, "answer"):
+                await event.message.answer(text)

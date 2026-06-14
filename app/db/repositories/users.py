@@ -44,8 +44,7 @@ class UserRepository:
             existing_user.username = username
             existing_user.first_name = first_name
             existing_user.last_name = last_name
-            existing_user.is_admin = is_admin
-            existing_user.is_active = True
+            existing_user.is_admin = bool(existing_user.is_admin or is_admin)
 
             if not existing_user.timezone:
                 existing_user.timezone = default_timezone
@@ -94,6 +93,16 @@ class UserRepository:
         await self.session.flush()
         return user
 
+    async def set_admin(self, user_id: int, is_admin: bool) -> User:
+        user = await self.get_by_id(user_id=user_id)
+
+        if user is None:
+            raise ValueError(f"User not found: {user_id}")
+
+        user.is_admin = is_admin
+        await self.session.flush()
+        return user
+
     async def deactivate(self, user_id: int) -> None:
         user = await self.get_by_id(user_id=user_id)
 
@@ -101,6 +110,15 @@ class UserRepository:
             return
 
         user.is_active = False
+        await self.session.flush()
+
+    async def activate(self, user_id: int) -> None:
+        user = await self.get_by_id(user_id=user_id)
+
+        if user is None:
+            return
+
+        user.is_active = True
         await self.session.flush()
 
     @staticmethod

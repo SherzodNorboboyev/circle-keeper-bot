@@ -17,7 +17,7 @@ RUN pip install --upgrade pip \
 
 COPY . .
 
-RUN mkdir -p /app/data /app/tmp \
+RUN mkdir -p /app/data /app/tmp /app/logs /app/backups /app/exports \
     && chown -R app:app /app
 
 USER app

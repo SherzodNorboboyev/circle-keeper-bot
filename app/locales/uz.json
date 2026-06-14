@@ -255,5 +255,13 @@
   
   "hello": "Salom",
   "welcome": "Xush kelibsiz",
-  "missing.key": "Tarjima topilmadi"
+  "missing.key": "Tarjima topilmadi",
+
+  "admin.forbidden": "Bu komanda faqat adminlar uchun mumkin.",
+  "admin.stats": "Admin statistikasi:\n\nFoydalanuvchilar: {total_users}\nFaol foydalanuvchilar: {active_users}\nJami odamlar: {total_people}\nFaol odamlar: {total_active_people}\nJami relationshiplar: {total_relationships}\nFaol relationshiplar: {total_active_relationships}\nMuvaffaqiyatsiz zaxiralashlar: {failed_backups}\nMuvaffaqiyatsiz importlar: {failed_imports}\nSo'nggi import vazifalari: {recent_imports}\nEslatishlar yuborildi: {reminder_sent_count}\nEslatishlar amalga oshmadi: {reminder_failed_count}",
+
+  "security.forbidden": "Bu actionni bajarishga ruxsat berilmagan.",
+  "privacy.delete_my_data_coming_soon": "Bu xususiyat keyingi versiyada qo'shiladi. Hozir, individual yozuvlarni o'chirish uchun /delete komandasidan foydalaning.",
+
+  "error.unexpected": "Kutilmagan xato yuz berdi. Iltimos, keyinroq qayta urinib ko'ring."
 }

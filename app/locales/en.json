@@ -255,5 +255,13 @@
 
   "hello": "Hello",
   "welcome": "Welcome",
-  "missing.key": "Translation not found"
+  "missing.key": "Translation not found",
+
+  "admin.forbidden": "This command is available only to admins.",
+  "admin.stats": "Admin statistics:\n\nUsers: {total_users}\nActive users: {active_users}\nTotal people: {total_people}\nActive people: {total_active_people}\nTotal relationships: {total_relationships}\nActive relationships: {total_active_relationships}\nFailed backups: {failed_backups}\nFailed imports: {failed_imports}\nRecent import jobs: {recent_imports}\nReminder sent: {reminder_sent_count}\nReminder failed: {reminder_failed_count}",
+
+  "security.forbidden": "You are not allowed to perform this action.",
+  "privacy.delete_my_data_coming_soon": "This feature will be added in the next version. For now, use /delete to remove individual records.",
+
+  "error.unexpected": "An unexpected error occurred. Please try again later."
 }

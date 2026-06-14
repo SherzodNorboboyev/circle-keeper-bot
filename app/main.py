@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 from urllib.parse import urlparse
 
+import sqlalchemy as sa
 from aiohttp import web
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
@@ -20,10 +21,20 @@ from app.logging import setup_logging
 from app.services.backup_trigger import configure_backup_trigger, shutdown_backup_trigger
 from app.services.i18n import I18nService
 from app.services.scheduler_service import SchedulerService
+from app.services.security_service import SecurityService
 
 
 async def health_handler(request: web.Request) -> web.Response:
     return web.json_response({"status": "ok"})
+
+
+async def check_database_connection() -> None:
+    session_maker = get_session_maker()
+
+    async with session_maker() as session:
+        await session.execute(sa.text("SELECT 1"))
+
+    logger.info("Database connection check completed.")
 
 
 def setup_dispatcher(settings: Settings, i18n: I18nService) -> Dispatcher:
@@ -120,9 +131,19 @@ async def main() -> None:
     settings = get_settings()
     setup_logging(env=settings.ENV, level=settings.LOG_LEVEL)
 
+    logger.info(
+        "Application starting.",
+        env=settings.ENV,
+        database_url=SecurityService.mask_database_url(settings.DATABASE_URL),
+        use_webhook=settings.USE_WEBHOOK,
+        scheduler=settings.ENABLE_SCHEDULER,
+    )
+
     i18n = I18nService(default_lang=settings.DEFAULT_LANGUAGE)
     dispatcher = setup_dispatcher(settings=settings, i18n=i18n)
     session_maker = get_session_maker()
+
+    await check_database_connection()
 
     bot = Bot(
         token=settings.bot_token,
@@ -153,6 +174,8 @@ async def main() -> None:
         else:
             await run_polling(bot=bot, dispatcher=dispatcher, settings=settings)
     finally:
+        logger.info("Application shutdown started.")
+
         await shutdown_backup_trigger()
 
         if scheduler_service is not None:
@@ -160,6 +183,8 @@ async def main() -> None:
 
         await close_engine()
         await bot.session.close()
+
+        logger.info("Application shutdown completed.")
 
 
 if __name__ == "__main__":

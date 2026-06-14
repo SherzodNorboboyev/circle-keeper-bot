@@ -255,5 +255,13 @@
 
   "hello": "Привет",
   "welcome": "Добро пожаловать",
-  "missing.key": "Перевод не найден"
+  "missing.key": "Перевод не найден",
+
+  "admin.forbidden": "Эта команда доступна только администраторам.",
+  "admin.stats": "Admin статистика:\n\nПользователи: {total_users}\nActive пользователи: {active_users}\nВсего людей: {total_people}\nActive люди: {total_active_people}\nВсего relationships: {total_relationships}\nActive relationships: {total_active_relationships}\nFailed backups: {failed_backups}\nFailed imports: {failed_imports}\nRecent import jobs: {recent_imports}\nReminder sent: {reminder_sent_count}\nReminder failed: {reminder_failed_count}",
+
+  "security.forbidden": "Это действие вам не разрешено.",
+  "privacy.delete_my_data_coming_soon": "Эта функция будет добавлена в следующей версии. Пока используйте /delete для удаления отдельных данных.",
+
+  "error.unexpected": "Произошла непредвиденная ошибка. Пожалуйста, попробуйте позже."
 }

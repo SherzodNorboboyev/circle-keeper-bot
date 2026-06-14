@@ -46,6 +46,9 @@ class Settings(BaseSettings):
     REMINDER_SCHEDULER_LOOKBACK_MINUTES: int = 10
     REMINDER_SCRIPT_LOOKBACK_MINUTES: int = 1440
 
+    EXCEL_MAX_FILE_SIZE_MB: int = 5
+    BACKUP_MAX_FILE_SIZE_MB: int = 10
+
     @field_validator("DATABASE_URL")
     @classmethod
     def normalize_database_url(cls, value: str) -> str:
@@ -118,11 +121,13 @@ class Settings(BaseSettings):
         "REMINDER_CHECK_INTERVAL_MINUTES",
         "REMINDER_SCHEDULER_LOOKBACK_MINUTES",
         "REMINDER_SCRIPT_LOOKBACK_MINUTES",
+        "EXCEL_MAX_FILE_SIZE_MB",
+        "BACKUP_MAX_FILE_SIZE_MB",
     )
     @classmethod
-    def validate_positive_minutes(cls, value: int) -> int:
+    def validate_positive_integer(cls, value: int) -> int:
         if value < 1:
-            raise ValueError("Reminder minute settings must be greater than zero.")
+            raise ValueError("Value must be greater than zero.")
         return value
 
     @model_validator(mode="after")
@@ -149,6 +154,14 @@ class Settings(BaseSettings):
     @property
     def admin_ids_set(self) -> set[int]:
         return set(self.ADMIN_TELEGRAM_IDS)
+
+    @property
+    def excel_max_file_size_bytes(self) -> int:
+        return self.EXCEL_MAX_FILE_SIZE_MB * 1024 * 1024
+
+    @property
+    def backup_max_file_size_bytes(self) -> int:
+        return self.BACKUP_MAX_FILE_SIZE_MB * 1024 * 1024
 
 
 @lru_cache

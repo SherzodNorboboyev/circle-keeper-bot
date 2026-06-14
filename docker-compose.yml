@@ -23,7 +23,6 @@ services:
       - .env
     environment:
       DATABASE_URL: postgresql+asyncpg://networking_bot:networking_bot@db:5432/networking_bot
-      USE_WEBHOOK: "false"
       HOST: 0.0.0.0
       PORT: 8080
     depends_on:
@@ -31,6 +30,7 @@ services:
         condition: service_healthy
     ports:
       - "8080:8080"
+    restart: unless-stopped
 
 volumes:
   networking_bot_postgres_data:
