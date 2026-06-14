@@ -4,11 +4,11 @@ import asyncio
 from urllib.parse import urlparse
 
 import sqlalchemy as sa
-from aiohttp import web
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
+from aiohttp import web
 from loguru import logger
 
 from app.bot.handlers import routers

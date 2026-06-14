@@ -8,23 +8,18 @@
   "menu.backup": "Backup / Export",
   "menu.settings": "Sozlamalar",
   "menu.change_language": "Tilni o‘zgartirish",
-
   "start.choose_language": "Tilni tanlang:",
   "start.welcome": "Assalomu alaykum, {first_name}! Asosiy menyudan kerakli bo‘limni tanlang.",
   "language.changed": "Til o‘zgartirildi.",
-
   "help.text": "Bu bot shaxsiy networking bazangizni yuritish, odamlar profili, aloqalar, tug‘ilgan kun eslatmalari, backup va Excel import/export uchun mo‘ljallangan. Mavjud komandalar: /start, /help, /language, /add, /list, /search, /view, /edit, /delete, /relationships, /add_child, /birthdays, /settings, /cancel.",
-
   "error.required_field": "Bu maydon majburiy.",
   "error.cancelled": "Amal bekor qilindi.",
-
   "common.cancel": "Bekor qilish",
   "common.back": "Ortga",
   "common.skip": "O‘tkazib yuborish",
   "common.save": "Saqlash",
   "common.yes": "Ha",
   "common.no": "Yo‘q",
-
   "person.ask_first_name": "Ismi?",
   "person.ask_last_name": "Familiyasi?",
   "person.ask_middle_name": "Otasining ismi bormi?",
@@ -36,7 +31,6 @@
   "person.ask_note": "Qisqacha izoh kiritasizmi?",
   "person.ask_relationship_offer": "Boshqa odam bilan bog‘lanishini relationship qismida qo‘shishni xohlaysizmi?",
   "person.ask_gender": "Jinsini tanlang.",
-
   "person.preview": "Ma’lumotlarni tekshiring:\n\n{preview}",
   "person.saved": "Odam saqlandi.",
   "person.updated": "Odam ma’lumotlari yangilandi.",
@@ -46,20 +40,17 @@
   "person.search_prompt": "Qidiruv so‘zini yuboring.",
   "person.search_empty": "Qidiruv bo‘yicha hech narsa topilmadi.",
   "person.search_results": "Qidiruv natijalari: “{query}”",
-
   "person.invalid_birth_date": "Tug‘ilgan sana noto‘g‘ri. Formatlar: 1995-04-21, 04-21, 21.04.1995, 21.04",
   "person.invalid_category": "Kategoriya noto‘g‘ri tanlangan.",
   "person.invalid_gender": "Jins qiymati noto‘g‘ri.",
   "person.invalid_field": "Tahrirlash maydoni noto‘g‘ri.",
   "person.custom_category_required": "Custom kategoriya nomi majburiy.",
-
   "person.select_to_view": "Ko‘rish uchun odamni tanlang.",
   "person.select_to_edit": "Tahrirlash uchun odamni tanlang.",
   "person.select_to_delete": "O‘chirish uchun odamni tanlang.",
   "person.select_field": "{full_name} uchun tahrirlanadigan maydonni tanlang.",
   "person.select_field_again": "Tahrirlanadigan maydonni tanlang.",
   "person.input_new_value": "{field}\nHozirgi qiymat: {current_value}\n\nYangi qiymatni yuboring.",
-
   "person.edit_preview_title": "Tahrirlash preview:",
   "person.editing_person": "Odam: {full_name}",
   "person.delete_confirm": "{full_name} soft delete qilinsinmi? Shu odam bilan bog‘liq active relationshiplar ham soft delete qilinadi, reminderlar o‘chiriladi.",
@@ -71,12 +62,10 @@
   "person.relationships_title": "Aloqalar:",
   "person.relationships_placeholder": "Aloqalar: 3-qismda qo‘shiladi.",
   "person.add_child_placeholder": "Farzand qo‘shish flow 3-qismda ulanadi.",
-
   "person.button.edit": "Tahrirlash",
   "person.button.delete": "O‘chirish",
   "person.button.add_relationship": "Relationship qo‘shish",
   "person.button.add_child": "Farzand qo‘shish",
-
   "person.field.first_name": "Ism",
   "person.field.last_name": "Familiya",
   "person.field.middle_name": "Otasining ismi",
@@ -92,12 +81,10 @@
   "person.field.location": "Joylashuv",
   "person.field.workplace": "Ish joyi",
   "person.field.education_place": "O‘qish joyi",
-
   "person.gender.male": "Erkak",
   "person.gender.female": "Ayol",
   "person.gender.other": "Boshqa",
   "person.gender.unknown": "Noma’lum",
-
   "person.category.father": "Ota",
   "person.category.mother": "Ona",
   "person.category.parent": "Ota/Ona",
@@ -114,13 +101,11 @@
   "person.category.spouse": "Turmush o‘rtoq",
   "person.category.other": "Boshqa",
   "person.category.custom": "Custom",
-
   "relationship.menu": "Relationship bo‘limi. Yangi aloqa yaratish yoki mavjud aloqalarni ko‘rishni tanlang.",
   "relationship.button.create": "Relationship qo‘shish",
   "relationship.button.list": "Relationshiplar ro‘yxati",
   "relationship.button.delete": "Relationshipni o‘chirish",
   "relationship.button.back_to_list": "Ro‘yxatga qaytish",
-
   "relationship.select_from": "Kimdan?",
   "relationship.select_to": "Kimga?",
   "relationship.selected_from": "Boshlang‘ich odam: {full_name}",
@@ -131,7 +116,6 @@
   "relationship.ask_note": "Relationship uchun izoh bormi?",
   "relationship.ask_direction": "Relationship yo‘nalishini tanlang.",
   "relationship.ask_reverse_type": "Reverse relationship turini tanlang.",
-
   "relationship.preview": "Relationship preview:\n\nKimdan: {from_person}\nKimga: {to_person}\nTuri: {relationship_type}\nCustom label: {custom_label}\nBidirectional: {is_bidirectional}\nReverse turi: {reverse_relationship_type}\nIzoh: {note}",
   "relationship.created": "Relationship yaratildi.",
   "relationship.deleted": "Relationship soft delete qilindi.",
@@ -147,11 +131,9 @@
   "relationship.delete_confirm": "Bu relationship soft delete qilinsinmi?",
   "relationship.view": "Relationship:\n\nKimdan: {from_person}\nKimga: {to_person}\nTuri: {relationship_type}\nCustom label: {custom_label}\nBidirectional: {is_bidirectional}\nReverse turi: {reverse_relationship_type}\nIzoh: {note}",
   "relationship.profile_line": "- {full_name} — {label}",
-
   "relationship.direction.bidirectional": "Ikki tomonlama",
   "relationship.direction.directed": "Yo‘naltirilgan",
   "relationship.reverse.none": "Reverse turi yo‘q",
-
   "relationship.labels.parent": "ota/onasi",
   "relationship.labels.child": "farzandi",
   "relationship.labels.sibling": "aka-uka/opa-singil",
@@ -163,11 +145,9 @@
   "relationship.labels.relative": "qarindoshi",
   "relationship.labels.acquaintance": "tanishi",
   "relationship.labels.custom": "custom aloqa",
-
   "relationship.parent_roles.father": "otasi",
   "relationship.parent_roles.mother": "onasi",
   "relationship.parent_roles.parent": "ota/onasi",
-
   "child.select_parent": "Farzand qo‘shish uchun parent odamni tanlang.",
   "child.selected_parent": "Parent: {full_name}",
   "child.ask_first_name": "Bola ismi?",
@@ -177,7 +157,6 @@
   "child.ask_note": "Bola haqida qisqacha izoh bormi?",
   "child.preview": "Farzand preview:\n\nParent: {parent_full_name}\nIsm: {first_name}\nFamiliya: {last_name}\nTug‘ilgan kun: {birth_date}\nJins: {gender}\nIzoh: {note}",
   "child.created": "{child_full_name} alohida odam sifatida yaratildi va {parent_full_name} bilan parent-child relationship bog‘landi.",
-
   "reminder.default_created": "{count} ta tug‘ilgan kun eslatmasi yaratildi.",
   "reminder.birthday_tomorrow": "Eslatma: ertaga {full_name}ning tug‘ilgan kuni.",
   "reminder.birthday_tomorrow_with_age": "Eslatma: ertaga {full_name} {age} yoshga to‘ladi.",
@@ -185,7 +164,6 @@
   "reminder.birthday_today_with_age": "Eslatma: bugun {full_name} {age} yoshga to‘ladi.",
   "reminder.birthday_upcoming": "Eslatma: {days} kundan keyin {full_name}ning tug‘ilgan kuni.",
   "reminder.birthday_upcoming_with_age": "Eslatma: {days} kundan keyin {full_name} {age} yoshga to‘ladi.",
-
   "birthdays.menu": "Tug‘ilgan kunlar bo‘yicha davrni tanlang.",
   "birthdays.empty": "Bu davrda tug‘ilgan kunlar yo‘q.",
   "birthdays.upcoming_title": "Keyingi 7 kundagi tug‘ilgan kunlar:",
@@ -199,7 +177,6 @@
   "birthdays.button.next_7": "7 kun",
   "birthdays.button.next_30": "30 kun",
   "birthdays.button.periods": "Davr tanlash",
-
   "settings.title": "Sozlamalar:\n\nTimezone: {timezone}\nReminder vaqti: {reminder_time}\nTug‘ilgan kundan oldin: {days_before} kun\nTug‘ilgan kunning o‘zida reminder: {birthday_on_day_enabled}",
   "settings.timezone": "Timezone",
   "settings.reminder_time": "Reminder vaqti",
@@ -218,18 +195,15 @@
   "settings.enable_on_day": "Bugungi reminder yoqish",
   "settings.disable_on_day": "Bugungi reminder o‘chirish",
   "settings.language_hint": "Tilni o‘zgartirish uchun /language komandasidan foydalaning.",
-  
   "backup.export_choose_format": "Backup formatini tanlang.",
   "backup.export_success": "Backup yuborildi: {filename}",
   "backup.export_failed": "Backup yuborishda xatolik yuz berdi.",
   "backup.auto_failed": "Backup yuborishda xatolik yuz berdi. Ma’lumotlar database’da saqlandi, lekin backup fayl yuborilmadi.",
-
   "restore.ask_file": "JSON backup faylni yuboring.",
   "restore.invalid_file": "Backup fayl noto‘g‘ri. Faqat to‘g‘ri schema_version va checksumga ega .json fayl qabul qilinadi.",
   "restore.preview": "Restore preview:\n\nBackup sanasi: {generated_at}\nOdamlar: {people_count}\nRelationshiplar: {relationships_count}\nReminderlar: {reminders_count}\nSchema version: {schema_version}\n\nRestore rejimi: replace_all",
   "restore.completed": "Restore tugadi.\n\nOdamlar: {people_count}\nRelationshiplar: {relationships_count}\nReminderlar: {reminders_count}",
   "restore.cancelled": "Restore bekor qilindi.",
-
   "excel.template_ready": "Excel import template tayyor.",
   "excel.ask_file": "To‘ldirilgan .xlsx faylni yuboring.",
   "excel.invalid_extension": "Faqat .xlsx fayl qabul qilinadi.",
@@ -240,7 +214,6 @@
   "excel.error_report_ready": "Import xatolari bo‘yicha report tayyor.",
   "excel.export_ready": "Excel export tayyor.",
   "excel.no_data": "Export qilish uchun active ma’lumotlar yo‘q.",
-
   "import.errors.REQUIRED_FIELD_MISSING": "Majburiy maydon to‘ldirilmagan.",
   "import.errors.DUPLICATE_PERSON_KEY": "person_key takrorlangan.",
   "import.errors.INVALID_DATE_FORMAT": "Sana formati noto‘g‘ri.",
@@ -252,16 +225,16 @@
   "import.errors.INVALID_CHILD_RELATIONSHIP": "Parent va child bir xil bo‘lishi mumkin emas.",
   "import.errors.FORMULA_NOT_ALLOWED": "Formula yoki formula ko‘rinishidagi matn ruxsat etilmaydi.",
   "import.errors.DUPLICATE_PERSON_POSSIBLE": "Duplicate odam ehtimoli mavjud.",
-  
   "hello": "Salom",
   "welcome": "Xush kelibsiz",
   "missing.key": "Tarjima topilmadi",
-
   "admin.forbidden": "Bu komanda faqat adminlar uchun mumkin.",
   "admin.stats": "Admin statistikasi:\n\nFoydalanuvchilar: {total_users}\nFaol foydalanuvchilar: {active_users}\nJami odamlar: {total_people}\nFaol odamlar: {total_active_people}\nJami relationshiplar: {total_relationships}\nFaol relationshiplar: {total_active_relationships}\nMuvaffaqiyatsiz zaxiralashlar: {failed_backups}\nMuvaffaqiyatsiz importlar: {failed_imports}\nSo'nggi import vazifalari: {recent_imports}\nEslatishlar yuborildi: {reminder_sent_count}\nEslatishlar amalga oshmadi: {reminder_failed_count}",
-
   "security.forbidden": "Bu actionni bajarishga ruxsat berilmagan.",
   "privacy.delete_my_data_coming_soon": "Bu xususiyat keyingi versiyada qo'shiladi. Hozir, individual yozuvlarni o'chirish uchun /delete komandasidan foydalaning.",
-
-  "error.unexpected": "Kutilmagan xato yuz berdi. Iltimos, keyinroq qayta urinib ko'ring."
+  "error.unexpected": "Kutilmagan xato yuz berdi. Iltimos, keyinroq qayta urinib ko'ring.",
+  "backup.format.json": "JSON backup",
+  "backup.format.sqlite": "SQLite backup",
+  "restore.action.replace_all": "Hammasini almashtirish",
+  "excel.action.import": "Import qilish"
 }

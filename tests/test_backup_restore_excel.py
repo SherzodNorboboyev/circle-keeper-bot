@@ -1,23 +1,17 @@
 from __future__ import annotations
 
-from datetime import date
 from io import BytesIO
 
-import pytest
 from openpyxl import Workbook, load_workbook
-from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.db.models import Person
 from app.db.repositories.people import PeopleRepository
-from app.db.repositories.relationships import RelationshipsRepository
 from app.db.repositories.users import UserRepository
 from app.services.backup_service import BackupService
 from app.services.excel_export_service import ExcelExportService
 from app.services.excel_import_service import ExcelImportService
 from app.services.excel_template_service import ExcelTemplateService
 from app.services.people_service import PeopleService
-from app.services.relationship_service import RelationshipService
 from app.services.restore_service import RestoreService
 
 
@@ -137,7 +131,9 @@ def test_excel_template_sheets_and_headers() -> None:
     template = ExcelTemplateService().create_template()
     workbook = load_workbook(BytesIO(template.content))
 
-    assert set(["Instructions", "People", "Relationships", "Children", "Categories", "Import_Errors"]).issubset(set(workbook.sheetnames))
+    assert set(["Instructions", "People", "Relationships", "Children", "Categories", "Import_Errors"]).issubset(
+        set(workbook.sheetnames)
+    )
     assert [cell.value for cell in workbook["People"][1]] == ExcelTemplateService.people_headers
     assert [cell.value for cell in workbook["Relationships"][1]] == ExcelTemplateService.relationship_headers
     assert [cell.value for cell in workbook["Children"][1]] == ExcelTemplateService.children_headers
@@ -148,12 +144,46 @@ async def test_excel_import_valid_file(sqlite_session: AsyncSession) -> None:
 
     content = build_import_workbook(
         people_rows=[
-            ["p001", "Ali", "Valiyev", None, "Alish", None, "ali", "1995-04-21", "true", "male", "friend", None, None, None, None, None, None],
-            ["p002", "Sardor", "Karimov", None, None, None, None, "04-22", "false", "male", "colleague", None, None, None, None, None, None]
+            [
+                "p001",
+                "Ali",
+                "Valiyev",
+                None,
+                "Alish",
+                None,
+                "ali",
+                "1995-04-21",
+                "true",
+                "male",
+                "friend",
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+            ],
+            [
+                "p002",
+                "Sardor",
+                "Karimov",
+                None,
+                None,
+                None,
+                None,
+                "04-22",
+                "false",
+                "male",
+                "colleague",
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+            ],
         ],
-        relationship_rows=[
-            ["p001", "p002", "friend", None, None, "true"]
-        ],
+        relationship_rows=[["p001", "p002", "friend", None, None, "true"]],
     )
 
     service = ExcelImportService()
@@ -180,8 +210,44 @@ async def test_excel_import_duplicate_person_key(sqlite_session: AsyncSession) -
 
     content = build_import_workbook(
         people_rows=[
-            ["p001", "Ali", None, None, None, None, None, None, None, None, "friend", None, None, None, None, None, None],
-            ["p001", "Sardor", None, None, None, None, None, None, None, None, "friend", None, None, None, None, None, None]
+            [
+                "p001",
+                "Ali",
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                "friend",
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+            ],
+            [
+                "p001",
+                "Sardor",
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                "friend",
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+            ],
         ],
     )
 
@@ -195,7 +261,25 @@ async def test_excel_import_invalid_birth_date(sqlite_session: AsyncSession) -> 
 
     content = build_import_workbook(
         people_rows=[
-            ["p001", "Ali", None, None, None, None, None, "31.02.1995", None, None, "friend", None, None, None, None, None, None]
+            [
+                "p001",
+                "Ali",
+                None,
+                None,
+                None,
+                None,
+                None,
+                "31.02.1995",
+                None,
+                None,
+                "friend",
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+            ]
         ],
     )
 
@@ -209,7 +293,25 @@ async def test_excel_import_custom_category_required(sqlite_session: AsyncSessio
 
     content = build_import_workbook(
         people_rows=[
-            ["p001", "Ali", None, None, None, None, None, None, None, None, "custom", None, None, None, None, None, None]
+            [
+                "p001",
+                "Ali",
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                "custom",
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+            ]
         ],
     )
 
@@ -223,11 +325,27 @@ async def test_excel_import_relationship_person_key_not_found(sqlite_session: As
 
     content = build_import_workbook(
         people_rows=[
-            ["p001", "Ali", None, None, None, None, None, None, None, None, "friend", None, None, None, None, None, None]
+            [
+                "p001",
+                "Ali",
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                "friend",
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+            ]
         ],
-        relationship_rows=[
-            ["p001", "p404", "friend", None, None, "true"]
-        ],
+        relationship_rows=[["p001", "p404", "friend", None, None, "true"]],
     )
 
     parsed = await ExcelImportService().parse_file(sqlite_session, user_id=user_id, content=content)
@@ -240,7 +358,25 @@ async def test_excel_import_formula_injection_reject(sqlite_session: AsyncSessio
 
     content = build_import_workbook(
         people_rows=[
-            ["p001", "=HACK", None, None, None, None, None, None, None, None, "friend", None, None, None, None, None, None]
+            [
+                "p001",
+                "=HACK",
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                "friend",
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+            ]
         ],
     )
 
@@ -251,7 +387,7 @@ async def test_excel_import_formula_injection_reject(sqlite_session: AsyncSessio
 
 async def test_excel_export_active_only(sqlite_session: AsyncSession) -> None:
     user_id = await create_user(sqlite_session, telegram_user_id=51011)
-    active_person = await create_person(sqlite_session, user_id, "Active")
+    await create_person(sqlite_session, user_id, "Active")
     deleted_person = await create_person(sqlite_session, user_id, "Deleted")
 
     await PeopleRepository(sqlite_session).soft_delete_person(user_id=user_id, person_id=deleted_person.id)
@@ -264,8 +400,7 @@ async def test_excel_export_active_only(sqlite_session: AsyncSession) -> None:
     people_sheet = workbook["People"]
 
     exported_names = [
-        people_sheet.cell(row=row_number, column=2).value
-        for row_number in range(2, people_sheet.max_row + 1)
+        people_sheet.cell(row=row_number, column=2).value for row_number in range(2, people_sheet.max_row + 1)
     ]
 
     assert exported_names == ["Active"]

@@ -3,7 +3,6 @@ from __future__ import annotations
 import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.db.models import Relationship
 from app.db.repositories.people import PeopleRepository
 from app.db.repositories.relationships import RelationshipsRepository
 from app.db.repositories.users import UserRepository

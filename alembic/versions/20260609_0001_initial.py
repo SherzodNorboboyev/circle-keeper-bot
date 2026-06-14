@@ -7,10 +7,9 @@ Create Date: 2026-06-09 00:00:00.000000
 
 from __future__ import annotations
 
-from alembic import op
 import sqlalchemy as sa
+from alembic import op
 from sqlalchemy.dialects import postgresql
-
 
 revision = "20260609_0001"
 down_revision = None
@@ -43,7 +42,7 @@ def upgrade() -> None:
         sa.Column("first_name", sa.String(length=255), nullable=True),
         sa.Column("last_name", sa.String(length=255), nullable=True),
         sa.Column("language_code", sa.String(length=5), nullable=True),
-        sa.Column("timezone", sa.String(length=64), nullable=False),
+        sa.Column("timezone", sa.String(length=64), nullable=False, server_default="Asia/Tashkent"),
         sa.Column("is_admin", sa.Boolean(), nullable=False, server_default=sa.false()),
         sa.Column("is_active", sa.Boolean(), nullable=False, server_default=sa.true()),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now()),
@@ -79,7 +78,9 @@ def upgrade() -> None:
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now()),
         sa.Column("updated_at", sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now()),
         sa.Column("deleted_at", sa.DateTime(timezone=True), nullable=True),
-        sa.CheckConstraint("gender IS NULL OR gender IN ('male', 'female', 'other', 'unknown')", name="chk_people_gender"),
+        sa.CheckConstraint(
+            "gender IS NULL OR gender IN ('male', 'female', 'other', 'unknown')", name="chk_people_gender"
+        ),
         sa.CheckConstraint(
             "category IS NULL OR category IN ('father', 'mother', 'parent', 'brother', 'sister', 'sibling', "
             "'child', 'relative', 'classmate', 'coursemate', 'colleague', 'friend', 'acquaintance', "
@@ -242,7 +243,9 @@ def upgrade() -> None:
         ),
         sa.CheckConstraint("reminder_type IN ('birthday')", name="chk_reminders_type"),
         sa.CheckConstraint("days_before BETWEEN 0 AND 30", name="chk_reminders_days_before"),
-        sa.UniqueConstraint("user_id", "person_id", "reminder_type", "days_before", name="uq_reminders_person_type_days"),
+        sa.UniqueConstraint(
+            "user_id", "person_id", "reminder_type", "days_before", name="uq_reminders_person_type_days"
+        ),
     )
     op.create_index("idx_reminders_due_lookup", "reminders", ["user_id", "enabled", "remind_time_local", "days_before"])
 
@@ -297,7 +300,9 @@ def upgrade() -> None:
         sa.Column("status", sa.String(length=30), nullable=False, server_default="pending"),
         sa.Column("error_message", sa.Text(), nullable=True),
         sa.ForeignKeyConstraint(["user_id"], ["users.id"], name="fk_backups_user_id_users", ondelete="CASCADE"),
-        sa.CheckConstraint("backup_type IN ('auto', 'manual_export', 'after_import', 'after_restore')", name="chk_backups_type"),
+        sa.CheckConstraint(
+            "backup_type IN ('auto', 'manual_export', 'after_import', 'after_restore')", name="chk_backups_type"
+        ),
         sa.CheckConstraint("storage_format IN ('json', 'sqlite')", name="chk_backups_format"),
         sa.CheckConstraint("status IN ('pending', 'sent', 'failed')", name="chk_backups_status"),
     )
@@ -379,7 +384,9 @@ def upgrade() -> None:
         sa.Column("error_code", sa.String(length=120), nullable=False),
         sa.Column("error_message", sa.Text(), nullable=False),
         sa.Column("suggested_fix", sa.Text(), nullable=True),
-        sa.ForeignKeyConstraint(["import_job_id"], ["import_jobs.id"], name="fk_import_errors_import_job_id_import_jobs", ondelete="CASCADE"),
+        sa.ForeignKeyConstraint(
+            ["import_job_id"], ["import_jobs.id"], name="fk_import_errors_import_job_id_import_jobs", ondelete="CASCADE"
+        ),
     )
     op.create_index("idx_import_errors_job", "import_errors", ["import_job_id"])
     op.create_index("idx_import_errors_code", "import_errors", ["error_code"])

@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from datetime import date, datetime
-from typing import Any
+from typing import Any, ClassVar
 
 from loguru import logger
 
@@ -33,7 +33,7 @@ class PeopleValidationError(ValueError):
 
 
 class PeopleService:
-    text_fields = {
+    text_fields: ClassVar[set[str]] = {
         "first_name",
         "last_name",
         "middle_name",
@@ -50,7 +50,7 @@ class PeopleService:
         "education_place",
     }
 
-    editable_fields = {
+    editable_fields: ClassVar[set[str]] = {
         "first_name",
         "last_name",
         "middle_name",
@@ -244,9 +244,7 @@ class PeopleService:
         last_name = self._get_value(person, "last_name")
 
         parts = [
-            str(part).strip()
-            for part in (first_name, middle_name, last_name)
-            if part is not None and str(part).strip()
+            str(part).strip() for part in (first_name, middle_name, last_name) if part is not None and str(part).strip()
         ]
 
         return " ".join(parts) if parts else "—"
@@ -383,7 +381,7 @@ class PeopleService:
 
         for prefix in prefixes:
             if lowered.startswith(prefix):
-                normalized = normalized[len(prefix):]
+                normalized = normalized[len(prefix) :]
                 break
 
         normalized = normalized.strip().lstrip("@").strip("/")

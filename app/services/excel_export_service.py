@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from io import BytesIO
-from typing import Any
+from typing import Any, ClassVar
 
 from openpyxl import Workbook
 from openpyxl.styles import Font
@@ -12,9 +12,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.models import Person, Relationship
 from app.services.people_service import PeopleService
-
-
-FORMULA_PREFIXES = ("=", "+", "-", "@")
+from app.services.security_service import SecurityService
 
 
 @dataclass(frozen=True)
@@ -24,7 +22,7 @@ class ExcelExportFile:
 
 
 class ExcelExportService:
-    people_headers = [
+    people_headers: ClassVar[list[str]] = [
         "person_key",
         "first_name",
         "last_name",
@@ -43,7 +41,7 @@ class ExcelExportService:
         "workplace",
         "education_place",
     ]
-    relationship_headers = [
+    relationship_headers: ClassVar[list[str]] = [
         "from_person_key",
         "to_person_key",
         "relationship_type",
@@ -51,13 +49,13 @@ class ExcelExportService:
         "note",
         "is_bidirectional",
     ]
-    children_headers = [
+    children_headers: ClassVar[list[str]] = [
         "parent_person_key",
         "child_person_key",
         "parent_role",
         "note",
     ]
-    birthday_headers = [
+    birthday_headers: ClassVar[list[str]] = [
         "person_key",
         "full_name",
         "birth_date",
@@ -92,10 +90,7 @@ class ExcelExportService:
         birthdays_sheet = workbook.create_sheet("Birthdays")
         instructions_sheet = workbook.create_sheet("Instructions")
 
-        person_key_by_id = {
-            person.id: f"p{person.id}"
-            for person in people
-        }
+        person_key_by_id = {person.id: f"p{person.id}" for person in people}
 
         self._write_people_sheet(people_sheet, people, person_key_by_id)
         self._write_relationships_sheet(relationships_sheet, relationships, person_key_by_id)
@@ -239,13 +234,11 @@ class ExcelExportService:
         worksheet.append(self.birthday_headers)
         people_service = PeopleService()
 
-        birthday_people = [
-            person
-            for person in people
-            if person.birth_month and person.birth_day
-        ]
+        birthday_people = [person for person in people if person.birth_month and person.birth_day]
 
-        birthday_people.sort(key=lambda person: (person.birth_month, person.birth_day, person.first_name.lower()))
+        birthday_people.sort(
+            key=lambda person: (person.birth_month, person.birth_day, person.first_name.lower()),
+        )
 
         for person in birthday_people:
             worksheet.append(
@@ -261,7 +254,8 @@ class ExcelExportService:
 
     def _write_instructions_sheet(self, worksheet) -> None:
         worksheet.append(["key", "value"])
-        worksheet.append(["generated_at", datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z")])
+        generated_at = datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+        worksheet.append(["generated_at", generated_at])
         worksheet.append(["active_only", "Only people and relationships with deleted_at IS NULL are exported."])
         worksheet.append(["formula_safety", "Values starting with =, +, -, or @ are escaped with apostrophe."])
 
@@ -282,10 +276,7 @@ class ExcelExportService:
 
         text = str(value)
 
-        if text.startswith(FORMULA_PREFIXES):
-            return "'" + text
-
-        return text
+        return SecurityService.escape_formula_like(text)
 
     @staticmethod
     def _style_header(worksheet) -> None:
@@ -295,9 +286,6 @@ class ExcelExportService:
     @staticmethod
     def _auto_width(worksheet) -> None:
         for column_cells in worksheet.columns:
-            max_length = max(
-                len(str(cell.value or ""))
-                for cell in column_cells
-            )
+            max_length = max(len(str(cell.value or "")) for cell in column_cells)
             column_letter = column_cells[0].column_letter
             worksheet.column_dimensions[column_letter].width = min(max(max_length + 2, 14), 50)

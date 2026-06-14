@@ -323,13 +323,7 @@ class PeopleRepository:
         if not normalized_query:
             return statement
 
-        compact_query = (
-            normalized_query
-            .replace(" ", "")
-            .replace("-", "")
-            .replace("–", "")
-            .replace("—", "")
-        )
+        compact_query = normalized_query.replace(" ", "").replace("-", "").replace("–", "").replace("—", "")
 
         like_query = f"%{normalized_query}%"
         like_compact_query = f"%{compact_query}%"

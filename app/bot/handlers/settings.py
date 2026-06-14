@@ -253,9 +253,9 @@ async def send_settings(
             timezone=effective.timezone,
             reminder_time=effective.reminder_time.strftime("%H:%M"),
             days_before=effective.birthday_days_before,
-            birthday_on_day_enabled=i18n.t("common.yes", lang=lang)
-            if effective.birthday_on_day_enabled
-            else i18n.t("common.no", lang=lang),
+            birthday_on_day_enabled=(
+                i18n.t("common.yes", lang=lang) if effective.birthday_on_day_enabled else i18n.t("common.no", lang=lang)
+            ),
         ),
         reply_markup=settings_keyboard(
             i18n=i18n,

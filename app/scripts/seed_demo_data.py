@@ -6,13 +6,11 @@ from loguru import logger
 
 from app.config import get_settings
 from app.db.repositories.people import PeopleRepository
-from app.db.repositories.relationships import RelationshipsRepository
 from app.db.repositories.users import UserRepository
 from app.db.session import close_engine, init_db
 from app.logging import setup_logging
 from app.services.people_service import PeopleService
 from app.services.relationship_service import RelationshipService
-
 
 DEMO_TELEGRAM_USER_ID = 100000001
 

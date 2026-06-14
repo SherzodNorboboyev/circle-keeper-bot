@@ -3,8 +3,8 @@ from __future__ import annotations
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 from app.services.i18n import I18nService
-from app.services.reminder_service import UpcomingBirthday
 from app.services.people_service import PeopleService
+from app.services.reminder_service import UpcomingBirthday
 
 
 def birthdays_period_keyboard(i18n: I18nService, lang: str) -> InlineKeyboardMarkup:

@@ -1284,8 +1284,7 @@ async def delete_person_confirm(
         person_id=person_id,
     )
     old_relationship_values = [
-        relationship_service.relationship_to_dict(relationship)
-        for relationship in active_relationships
+        relationship_service.relationship_to_dict(relationship) for relationship in active_relationships
     ]
 
     deleted_person = await repository.soft_delete_person(
@@ -1727,13 +1726,20 @@ async def render_person_profile(
         lang=lang,
     )
 
+    category_text = format_category(
+        person.category,
+        person.custom_category,
+        i18n=i18n,
+        lang=lang,
+    )
+
     rows = [
         f"👤 {service.format_full_name(person)}",
         f"📛 {i18n.t('person.field.nickname', lang=lang)}: {person.nickname or '—'}",
         f"📱 {i18n.t('person.field.phone', lang=lang)}: {person.phone or '—'}",
         f"🔗 {i18n.t('person.field.telegram_username', lang=lang)}: {format_username(person.telegram_username)}",
         f"🎂 {i18n.t('person.field.birth_date', lang=lang)}: {birth_date_text}",
-        f"🏷 {i18n.t('person.field.category', lang=lang)}: {format_category(person.category, person.custom_category, i18n=i18n, lang=lang)}",
+        f"🏷 {i18n.t('person.field.category', lang=lang)}: {category_text}",
         f"📍 {i18n.t('person.field.location', lang=lang)}: {person.location or '—'}",
         f"💼 {i18n.t('person.field.workplace', lang=lang)}: {person.workplace or '—'}",
         f"🎓 {i18n.t('person.field.education_place', lang=lang)}: {person.education_place or '—'}",

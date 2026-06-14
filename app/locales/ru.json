@@ -8,23 +8,18 @@
   "menu.backup": "Backup / Export",
   "menu.settings": "Настройки",
   "menu.change_language": "Изменить язык",
-
   "start.choose_language": "Выберите язык:",
   "start.welcome": "Здравствуйте, {first_name}! Выберите нужный раздел в главном меню.",
   "language.changed": "Язык изменён.",
-
   "help.text": "Этот бот предназначен для ведения личной networking-базы: профили людей, связи, напоминания о днях рождения, backup и Excel импорт/экспорт. Доступные команды: /start, /help, /language, /add, /list, /search, /view, /edit, /delete, /relationships, /add_child, /birthdays, /settings, /cancel.",
-
   "error.required_field": "Это поле обязательно.",
   "error.cancelled": "Действие отменено.",
-
   "common.cancel": "Отмена",
   "common.back": "Назад",
   "common.skip": "Пропустить",
   "common.save": "Сохранить",
   "common.yes": "Да",
   "common.no": "Нет",
-
   "person.ask_first_name": "Имя?",
   "person.ask_last_name": "Фамилия?",
   "person.ask_middle_name": "Есть отчество?",
@@ -36,7 +31,6 @@
   "person.ask_note": "Хотите добавить короткую заметку?",
   "person.ask_relationship_offer": "Хотите связать этого человека с другим в разделе relationships?",
   "person.ask_gender": "Выберите пол.",
-
   "person.preview": "Проверьте данные:\n\n{preview}",
   "person.saved": "Человек сохранён.",
   "person.updated": "Данные человека обновлены.",
@@ -46,20 +40,17 @@
   "person.search_prompt": "Отправьте поисковый запрос.",
   "person.search_empty": "По запросу ничего не найдено.",
   "person.search_results": "Результаты поиска: “{query}”",
-
   "person.invalid_birth_date": "Дата рождения указана неверно. Форматы: 1995-04-21, 04-21, 21.04.1995, 21.04",
   "person.invalid_category": "Категория выбрана неверно.",
   "person.invalid_gender": "Значение пола неверное.",
   "person.invalid_field": "Поле для редактирования неверное.",
   "person.custom_category_required": "Название custom категории обязательно.",
-
   "person.select_to_view": "Выберите человека для просмотра.",
   "person.select_to_edit": "Выберите человека для редактирования.",
   "person.select_to_delete": "Выберите человека для удаления.",
   "person.select_field": "Выберите поле для редактирования у {full_name}.",
   "person.select_field_again": "Выберите поле для редактирования.",
   "person.input_new_value": "{field}\nТекущее значение: {current_value}\n\nОтправьте новое значение.",
-
   "person.edit_preview_title": "Preview редактирования:",
   "person.editing_person": "Человек: {full_name}",
   "person.delete_confirm": "Soft delete для {full_name}? Активные relationship с этим человеком тоже будут soft deleted, reminders будут отключены.",
@@ -71,12 +62,10 @@
   "person.relationships_title": "Связи:",
   "person.relationships_placeholder": "Связи: будут добавлены в 3-й части.",
   "person.add_child_placeholder": "Flow добавления ребёнка будет подключён в 3-й части.",
-
   "person.button.edit": "Редактировать",
   "person.button.delete": "Удалить",
   "person.button.add_relationship": "Добавить relationship",
   "person.button.add_child": "Добавить ребёнка",
-
   "person.field.first_name": "Имя",
   "person.field.last_name": "Фамилия",
   "person.field.middle_name": "Отчество",
@@ -92,12 +81,10 @@
   "person.field.location": "Локация",
   "person.field.workplace": "Место работы",
   "person.field.education_place": "Место учёбы",
-
   "person.gender.male": "Мужчина",
   "person.gender.female": "Женщина",
   "person.gender.other": "Другое",
   "person.gender.unknown": "Неизвестно",
-
   "person.category.father": "Отец",
   "person.category.mother": "Мать",
   "person.category.parent": "Родитель",
@@ -114,13 +101,11 @@
   "person.category.spouse": "Супруг/супруга",
   "person.category.other": "Другое",
   "person.category.custom": "Custom",
-
   "relationship.menu": "Раздел relationships. Выберите создание новой связи или просмотр существующих связей.",
   "relationship.button.create": "Добавить relationship",
   "relationship.button.list": "Список relationships",
   "relationship.button.delete": "Удалить relationship",
   "relationship.button.back_to_list": "Вернуться к списку",
-
   "relationship.select_from": "От кого?",
   "relationship.select_to": "К кому?",
   "relationship.selected_from": "Первый человек: {full_name}",
@@ -131,7 +116,6 @@
   "relationship.ask_note": "Есть заметка для relationship?",
   "relationship.ask_direction": "Выберите направление relationship.",
   "relationship.ask_reverse_type": "Выберите reverse relationship type.",
-
   "relationship.preview": "Relationship preview:\n\nОт кого: {from_person}\nК кому: {to_person}\nТип: {relationship_type}\nCustom label: {custom_label}\nBidirectional: {is_bidirectional}\nReverse type: {reverse_relationship_type}\nЗаметка: {note}",
   "relationship.created": "Relationship создан.",
   "relationship.deleted": "Relationship soft deleted.",
@@ -147,11 +131,9 @@
   "relationship.delete_confirm": "Soft delete для этого relationship?",
   "relationship.view": "Relationship:\n\nОт кого: {from_person}\nК кому: {to_person}\nТип: {relationship_type}\nCustom label: {custom_label}\nBidirectional: {is_bidirectional}\nReverse type: {reverse_relationship_type}\nЗаметка: {note}",
   "relationship.profile_line": "- {full_name} — {label}",
-
   "relationship.direction.bidirectional": "Двусторонняя",
   "relationship.direction.directed": "Направленная",
   "relationship.reverse.none": "Без reverse type",
-
   "relationship.labels.parent": "родитель",
   "relationship.labels.child": "ребёнок",
   "relationship.labels.sibling": "брат/сестра",
@@ -163,11 +145,9 @@
   "relationship.labels.relative": "родственник",
   "relationship.labels.acquaintance": "знакомый",
   "relationship.labels.custom": "custom связь",
-
   "relationship.parent_roles.father": "отец",
   "relationship.parent_roles.mother": "мать",
   "relationship.parent_roles.parent": "родитель",
-
   "child.select_parent": "Выберите parent человека, чтобы добавить ребёнка.",
   "child.selected_parent": "Parent: {full_name}",
   "child.ask_first_name": "Имя ребёнка?",
@@ -177,7 +157,6 @@
   "child.ask_note": "Есть короткая заметка о ребёнке?",
   "child.preview": "Preview ребёнка:\n\nParent: {parent_full_name}\nИмя: {first_name}\nФамилия: {last_name}\nДень рождения: {birth_date}\nПол: {gender}\nЗаметка: {note}",
   "child.created": "{child_full_name} создан как отдельный человек и связан с {parent_full_name} через parent-child relationship.",
-
   "reminder.default_created": "Создано reminders дня рождения: {count}.",
   "reminder.birthday_tomorrow": "Напоминание: завтра день рождения у {full_name}.",
   "reminder.birthday_tomorrow_with_age": "Напоминание: завтра {full_name} исполнится {age} лет.",
@@ -185,7 +164,6 @@
   "reminder.birthday_today_with_age": "Напоминание: сегодня {full_name} исполняется {age} лет.",
   "reminder.birthday_upcoming": "Напоминание: через {days} дней день рождения у {full_name}.",
   "reminder.birthday_upcoming_with_age": "Напоминание: через {days} дней {full_name} исполнится {age} лет.",
-
   "birthdays.menu": "Выберите период для дней рождения.",
   "birthdays.empty": "В этом периоде дней рождения нет.",
   "birthdays.upcoming_title": "Дни рождения в ближайшие 7 дней:",
@@ -199,7 +177,6 @@
   "birthdays.button.next_7": "7 дней",
   "birthdays.button.next_30": "30 дней",
   "birthdays.button.periods": "Выбрать период",
-
   "settings.title": "Настройки:\n\nTimezone: {timezone}\nВремя reminder: {reminder_time}\nЗа сколько дней до дня рождения: {days_before}\nReminder в день рождения: {birthday_on_day_enabled}",
   "settings.timezone": "Timezone",
   "settings.reminder_time": "Время reminder",
@@ -218,18 +195,15 @@
   "settings.enable_on_day": "Включить reminder сегодня",
   "settings.disable_on_day": "Отключить reminder сегодня",
   "settings.language_hint": "Чтобы изменить язык, используйте команду /language.",
-  
   "backup.export_choose_format": "Выберите формат backup.",
   "backup.export_success": "Backup отправлен: {filename}",
   "backup.export_failed": "Ошибка при отправке backup.",
   "backup.auto_failed": "Ошибка при отправке backup. Данные сохранены в database, но backup файл не был отправлен.",
-
   "restore.ask_file": "Отправьте JSON backup файл.",
   "restore.invalid_file": "Backup файл неверный. Принимается только .json файл с корректными schema_version и checksum.",
   "restore.preview": "Restore preview:\n\nДата backup: {generated_at}\nЛюди: {people_count}\nRelationships: {relationships_count}\nReminders: {reminders_count}\nSchema version: {schema_version}\n\nRestore mode: replace_all",
   "restore.completed": "Restore завершён.\n\nЛюди: {people_count}\nRelationships: {relationships_count}\nReminders: {reminders_count}",
   "restore.cancelled": "Restore отменён.",
-
   "excel.template_ready": "Excel import template готов.",
   "excel.ask_file": "Отправьте заполненный .xlsx файл.",
   "excel.invalid_extension": "Принимается только .xlsx файл.",
@@ -240,7 +214,6 @@
   "excel.error_report_ready": "Report по ошибкам import готов.",
   "excel.export_ready": "Excel export готов.",
   "excel.no_data": "Нет active данных для export.",
-
   "import.errors.REQUIRED_FIELD_MISSING": "Обязательное поле не заполнено.",
   "import.errors.DUPLICATE_PERSON_KEY": "person_key повторяется.",
   "import.errors.INVALID_DATE_FORMAT": "Неверный формат даты.",
@@ -252,16 +225,16 @@
   "import.errors.INVALID_CHILD_RELATIONSHIP": "Parent и child не могут быть одним человеком.",
   "import.errors.FORMULA_NOT_ALLOWED": "Formula или текст, похожий на formula, запрещены.",
   "import.errors.DUPLICATE_PERSON_POSSIBLE": "Есть вероятность duplicate человека.",
-
   "hello": "Привет",
   "welcome": "Добро пожаловать",
   "missing.key": "Перевод не найден",
-
   "admin.forbidden": "Эта команда доступна только администраторам.",
   "admin.stats": "Admin статистика:\n\nПользователи: {total_users}\nActive пользователи: {active_users}\nВсего людей: {total_people}\nActive люди: {total_active_people}\nВсего relationships: {total_relationships}\nActive relationships: {total_active_relationships}\nFailed backups: {failed_backups}\nFailed imports: {failed_imports}\nRecent import jobs: {recent_imports}\nReminder sent: {reminder_sent_count}\nReminder failed: {reminder_failed_count}",
-
   "security.forbidden": "Это действие вам не разрешено.",
   "privacy.delete_my_data_coming_soon": "Эта функция будет добавлена в следующей версии. Пока используйте /delete для удаления отдельных данных.",
-
-  "error.unexpected": "Произошла непредвиденная ошибка. Пожалуйста, попробуйте позже."
+  "error.unexpected": "Произошла непредвиденная ошибка. Пожалуйста, попробуйте позже.",
+  "backup.format.json": "JSON backup",
+  "backup.format.sqlite": "SQLite backup",
+  "restore.action.replace_all": "Заменить всё",
+  "excel.action.import": "Импортировать"
 }

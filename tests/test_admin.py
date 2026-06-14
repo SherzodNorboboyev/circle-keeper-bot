@@ -7,7 +7,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.models import ImportJob
 from app.db.repositories.backups import BackupsRepository
 from app.db.repositories.people import PeopleRepository
-from app.db.repositories.relationships import RelationshipsRepository
 from app.db.repositories.reminders import RemindersRepository
 from app.db.repositories.users import UserRepository
 from app.services.admin_service import AdminService

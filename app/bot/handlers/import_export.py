@@ -14,6 +14,7 @@ from app.bot.states.import_states import ExcelImportStates, RestoreStates
 from app.config import get_settings
 from app.db.models import User
 from app.services.backup_service import BackupService
+from app.services.backup_trigger import BackupTriggerService
 from app.services.excel_error_report_service import ExcelErrorReportService
 from app.services.excel_export_service import ExcelExportService
 from app.services.excel_import_service import ExcelImportService, ExcelImportValidationError
@@ -21,49 +22,66 @@ from app.services.excel_template_service import ExcelTemplateService
 from app.services.i18n import I18nService
 from app.services.restore_service import RestoreService, RestoreValidationError
 
-
 router = Router(name="import_export")
 
 
-def export_format_keyboard() -> InlineKeyboardMarkup:
+def export_format_keyboard(i18n: I18nService, lang: str) -> InlineKeyboardMarkup:
     settings = get_settings()
     rows = [
         [
-            InlineKeyboardButton(text="JSON", callback_data="backup_export:json"),
+            InlineKeyboardButton(
+                text=i18n.t("backup.format.json", lang=lang),
+                callback_data="backup_export:json",
+            ),
         ],
     ]
 
     if settings.DATABASE_URL.startswith("sqlite"):
         rows.append(
             [
-                InlineKeyboardButton(text="SQLite", callback_data="backup_export:sqlite"),
+                InlineKeyboardButton(
+                    text=i18n.t("backup.format.sqlite", lang=lang),
+                    callback_data="backup_export:sqlite",
+                ),
             ],
         )
 
     return InlineKeyboardMarkup(inline_keyboard=rows)
 
 
-def restore_confirm_keyboard() -> InlineKeyboardMarkup:
+def restore_confirm_keyboard(i18n: I18nService, lang: str) -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(
         inline_keyboard=[
             [
-                InlineKeyboardButton(text="Replace all", callback_data="restore:replace_all"),
+                InlineKeyboardButton(
+                    text=i18n.t("restore.action.replace_all", lang=lang),
+                    callback_data="restore:replace_all",
+                ),
             ],
             [
-                InlineKeyboardButton(text="Cancel", callback_data="restore:cancel"),
+                InlineKeyboardButton(
+                    text=i18n.t("common.cancel", lang=lang),
+                    callback_data="restore:cancel",
+                ),
             ],
         ],
     )
 
 
-def excel_import_confirm_keyboard() -> InlineKeyboardMarkup:
+def excel_import_confirm_keyboard(i18n: I18nService, lang: str) -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(
         inline_keyboard=[
             [
-                InlineKeyboardButton(text="Import", callback_data="excel_import:confirm"),
+                InlineKeyboardButton(
+                    text=i18n.t("excel.action.import", lang=lang),
+                    callback_data="excel_import:confirm",
+                ),
             ],
             [
-                InlineKeyboardButton(text="Cancel", callback_data="excel_import:cancel"),
+                InlineKeyboardButton(
+                    text=i18n.t("common.cancel", lang=lang),
+                    callback_data="excel_import:cancel",
+                ),
             ],
         ],
     )
@@ -77,7 +95,7 @@ async def export_command(
 ) -> None:
     await message.answer(
         i18n.t("backup.export_choose_format", lang=lang),
-        reply_markup=export_format_keyboard(),
+        reply_markup=export_format_keyboard(i18n=i18n, lang=lang),
     )
 
 
@@ -212,7 +230,7 @@ async def restore_file_received(
             reminders_count=preview.reminders_count,
             schema_version=preview.schema_version,
         ),
-        reply_markup=restore_confirm_keyboard(),
+        reply_markup=restore_confirm_keyboard(i18n=i18n, lang=lang),
     )
 
 
@@ -221,7 +239,6 @@ async def restore_replace_all_callback(
     callback: CallbackQuery,
     state: FSMContext,
     session: AsyncSession,
-    bot: Bot,
     current_user: User,
     i18n: I18nService,
     lang: str,
@@ -237,16 +254,15 @@ async def restore_replace_all_callback(
             user_id=current_user.id,
             payload=payload,
         )
-        await BackupService(
-            session=session,
-            bot=bot,
-            i18n=i18n,
-        ).create_and_send_json_backup(
+        await BackupTriggerService().trigger_user_backup(
             user_id=current_user.id,
-            backup_type="after_restore",
             reason="restore.completed",
-            notify_on_failure=True,
+            metadata={"restore_mode": "replace_all"},
         )
+    except RestoreValidationError as exc:
+        await callback.message.answer(i18n.t(exc.message_key, lang=lang))
+        await callback.answer()
+        return
     finally:
         restore_path.unlink(missing_ok=True)
 
@@ -355,7 +371,7 @@ async def import_excel_file_received(
             errors=parsed.errors,
         )
 
-        error_report = ExcelErrorReportService().create_error_report(parsed.errors)
+        error_report = ExcelErrorReportService().create_error_report(parsed.errors, i18n=i18n, lang=lang)
 
         await message.answer_document(
             document=BufferedInputFile(
@@ -393,7 +409,7 @@ async def import_excel_file_received(
             error_count=preview.error_count,
             import_mode=preview.import_mode,
         ),
-        reply_markup=excel_import_confirm_keyboard(),
+        reply_markup=excel_import_confirm_keyboard(i18n=i18n, lang=lang),
     )
 
 
@@ -402,7 +418,6 @@ async def excel_import_confirm_callback(
     callback: CallbackQuery,
     state: FSMContext,
     session: AsyncSession,
-    bot: Bot,
     current_user: User,
     i18n: I18nService,
     lang: str,
@@ -423,7 +438,7 @@ async def excel_import_confirm_callback(
         )
 
         if parsed.errors:
-            error_report = ExcelErrorReportService().create_error_report(parsed.errors)
+            error_report = ExcelErrorReportService().create_error_report(parsed.errors, i18n=i18n, lang=lang)
 
             await callback.message.answer_document(
                 document=BufferedInputFile(
@@ -442,15 +457,10 @@ async def excel_import_confirm_callback(
             parsed=parsed,
         )
 
-        await BackupService(
-            session=session,
-            bot=bot,
-            i18n=i18n,
-        ).create_and_send_json_backup(
+        await BackupTriggerService().trigger_user_backup(
             user_id=current_user.id,
-            backup_type="after_import",
             reason="excel.import.completed",
-            notify_on_failure=True,
+            metadata={"import_job_id": result.import_job_id},
         )
     finally:
         import_path.unlink(missing_ok=True)

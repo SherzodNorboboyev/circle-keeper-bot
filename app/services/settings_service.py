@@ -44,23 +44,27 @@ class SettingsService:
         user = await UserRepository(self.session).get_by_id(user_id=user_id)
         values = await self.repository.get_settings(user_id=user_id)
 
-        timezone = str(
-            values.get("timezone")
-            or (user.timezone if user is not None else None)
-            or self.DEFAULT_TIMEZONE
-        )
+        timezone = str(values.get("timezone") or (user.timezone if user is not None else None) or self.DEFAULT_TIMEZONE)
 
         try:
             self.validate_timezone(timezone)
         except SettingsValidationError:
             timezone = self.DEFAULT_TIMEZONE
 
-        reminder_time = self.parse_time(
-            values.get("reminder_time") or self.DEFAULT_REMINDER_TIME.strftime("%H:%M"),
-        )
-        birthday_days_before = self.parse_days_before(
-            values.get("birthday_days_before", self.DEFAULT_DAYS_BEFORE),
-        )
+        try:
+            reminder_time = self.parse_time(
+                values.get("reminder_time") or self.DEFAULT_REMINDER_TIME.strftime("%H:%M"),
+            )
+        except SettingsValidationError:
+            reminder_time = self.DEFAULT_REMINDER_TIME
+
+        try:
+            birthday_days_before = self.parse_days_before(
+                values.get("birthday_days_before", self.DEFAULT_DAYS_BEFORE),
+            )
+        except SettingsValidationError:
+            birthday_days_before = self.DEFAULT_DAYS_BEFORE
+
         birthday_on_day_enabled = self.parse_bool(
             values.get("birthday_on_day_enabled", self.DEFAULT_ON_DAY_ENABLED),
         )

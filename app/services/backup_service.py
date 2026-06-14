@@ -3,12 +3,10 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
-import os
 import sqlite3
 import tempfile
 from dataclasses import dataclass
 from datetime import UTC, date, datetime
-from io import BytesIO
 from pathlib import Path
 from typing import Any
 
@@ -22,7 +20,6 @@ from app.db.models import Person, Relationship, Reminder, UserSetting
 from app.db.repositories.backups import BackupsRepository
 from app.db.repositories.users import UserRepository
 from app.services.i18n import I18nService
-
 
 SCHEMA_VERSION = "1.0.0"
 APP_VERSION = "1.0.0"
@@ -313,18 +310,9 @@ class BackupService:
                 "timezone": user.timezone,
             },
             "people": [self.serialize_person(person) for person in people],
-            "relationships": [
-                self.serialize_relationship(relationship)
-                for relationship in relationships
-            ],
-            "reminders": [
-                self.serialize_reminder(reminder)
-                for reminder in reminders
-            ],
-            "settings": [
-                self.serialize_setting(setting)
-                for setting in settings
-            ],
+            "relationships": [self.serialize_relationship(relationship) for relationship in relationships],
+            "reminders": [self.serialize_reminder(reminder) for reminder in reminders],
+            "settings": [self.serialize_setting(setting) for setting in settings],
             "metadata": {
                 "app_version": APP_VERSION,
                 "sha256": None,
@@ -335,36 +323,28 @@ class BackupService:
 
     async def _select_all_people(self, user_id: int) -> list[Person]:
         result = await self.session.execute(
-            select(Person)
-            .where(Person.user_id == user_id)
-            .order_by(Person.id.asc()),
+            select(Person).where(Person.user_id == user_id).order_by(Person.id.asc()),
         )
 
         return list(result.scalars().all())
 
     async def _select_all_relationships(self, user_id: int) -> list[Relationship]:
         result = await self.session.execute(
-            select(Relationship)
-            .where(Relationship.user_id == user_id)
-            .order_by(Relationship.id.asc()),
+            select(Relationship).where(Relationship.user_id == user_id).order_by(Relationship.id.asc()),
         )
 
         return list(result.scalars().all())
 
     async def _select_all_reminders(self, user_id: int) -> list[Reminder]:
         result = await self.session.execute(
-            select(Reminder)
-            .where(Reminder.user_id == user_id)
-            .order_by(Reminder.id.asc()),
+            select(Reminder).where(Reminder.user_id == user_id).order_by(Reminder.id.asc()),
         )
 
         return list(result.scalars().all())
 
     async def _select_all_settings(self, user_id: int) -> list[UserSetting]:
         result = await self.session.execute(
-            select(UserSetting)
-            .where(UserSetting.user_id == user_id)
-            .order_by(UserSetting.key.asc()),
+            select(UserSetting).where(UserSetting.user_id == user_id).order_by(UserSetting.key.asc()),
         )
 
         return list(result.scalars().all())

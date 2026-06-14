@@ -1,11 +1,11 @@
 from __future__ import annotations
 
+from collections.abc import Iterable
 from math import ceil
-from typing import Iterable
 
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-from app.db.models import RELATIONSHIP_TYPES, Relationship
+from app.db.models import RELATIONSHIP_TYPES
 from app.services.i18n import I18nService
 
 
@@ -40,7 +40,7 @@ def relationship_type_keyboard(
     for index in range(0, len(relationship_types), 2):
         row: list[InlineKeyboardButton] = []
 
-        for relationship_type in relationship_types[index:index + 2]:
+        for relationship_type in relationship_types[index : index + 2]:
             row.append(
                 InlineKeyboardButton(
                     text=i18n.t(f"relationship.labels.{relationship_type}", lang=lang),

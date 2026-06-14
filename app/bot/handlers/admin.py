@@ -9,7 +9,6 @@ from app.db.models import User
 from app.services.admin_service import AdminService, AdminStats
 from app.services.i18n import I18nService
 
-
 router = Router(name="admin")
 
 
@@ -33,10 +32,9 @@ async def stats_command(
 
 
 def render_admin_stats(stats: AdminStats, i18n: I18nService, lang: str) -> str:
-    recent_imports = ", ".join(
-        f"{status}: {count}"
-        for status, count in sorted(stats.recent_import_job_counts.items())
-    ) or "—"
+    recent_imports = (
+        ", ".join(f"{status}: {count}" for status, count in sorted(stats.recent_import_job_counts.items())) or "—"
+    )
 
     return i18n.t(
         "admin.stats",

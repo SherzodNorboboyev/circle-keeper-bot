@@ -5,7 +5,6 @@ from datetime import UTC, date, datetime, time, timedelta
 from typing import Any
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
-import sqlalchemy as sa
 from sqlalchemy import and_, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -428,10 +427,7 @@ class RemindersRepository:
 
         days = (end_date - start_date).days
 
-        return [
-            start_date + timedelta(days=offset)
-            for offset in range(days + 1)
-        ]
+        return [start_date + timedelta(days=offset) for offset in range(days + 1)]
 
     @staticmethod
     def birthday_matches_date(

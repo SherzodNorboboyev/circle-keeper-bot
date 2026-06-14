@@ -88,11 +88,17 @@ async def test_add_child_creates_separate_person_and_relationship(sqlite_session
     assert relationships_for_parent[0].is_bidirectional is False
     assert relationships_for_parent[0].reverse_relationship_type == "child"
 
-    assert relationship_service.get_display_relationship_type_for_viewer(
-        relationships_for_parent[0],
-        parent.id,
-    ) == "child"
-    assert relationship_service.get_display_relationship_type_for_viewer(
-        relationships_for_parent[0],
-        result.child.id,
-    ) == "parent"
+    assert (
+        relationship_service.get_display_relationship_type_for_viewer(
+            relationships_for_parent[0],
+            parent.id,
+        )
+        == "child"
+    )
+    assert (
+        relationship_service.get_display_relationship_type_for_viewer(
+            relationships_for_parent[0],
+            result.child.id,
+        )
+        == "parent"
+    )

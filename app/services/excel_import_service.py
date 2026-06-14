@@ -3,19 +3,18 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from io import BytesIO
-from typing import Any
+from typing import Any, ClassVar
 
 from openpyxl import load_workbook
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.models import GENDERS, PERSON_CATEGORIES, RELATIONSHIP_TYPES, ImportJob
+from app.db.repositories.imports import ImportsRepository
 from app.db.repositories.people import PeopleRepository
-from app.db.repositories.relationships import RelationshipsRepository
 from app.services.excel_error_report_service import ImportErrorItem
 from app.services.people_service import PeopleService, PeopleValidationError
 from app.services.relationship_service import RelationshipService, RelationshipValidationError
 from app.services.reminder_service import ReminderService
-
 
 FORMULA_PREFIXES = ("=", "+", "-", "@")
 
@@ -94,7 +93,7 @@ class ExcelImportValidationError(ValueError):
 class ExcelImportService:
     MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024
 
-    people_headers = [
+    people_headers: ClassVar[list[str]] = [
         "person_key",
         "first_name",
         "last_name",
@@ -113,7 +112,7 @@ class ExcelImportService:
         "workplace",
         "education_place",
     ]
-    relationship_headers = [
+    relationship_headers: ClassVar[list[str]] = [
         "from_person_key",
         "to_person_key",
         "relationship_type",
@@ -121,13 +120,13 @@ class ExcelImportService:
         "note",
         "is_bidirectional",
     ]
-    children_headers = [
+    children_headers: ClassVar[list[str]] = [
         "parent_person_key",
         "child_person_key",
         "parent_role",
         "note",
     ]
-    required_sheets = {"People", "Relationships", "Children"}
+    required_sheets: ClassVar[set[str]] = {"People", "Relationships", "Children"}
 
     def validate_document(
         self,
@@ -293,10 +292,7 @@ class ExcelImportService:
                     continue
 
             for child_row in parsed.children:
-                if (
-                    child_row.parent_person_key not in person_by_key
-                    or child_row.child_person_key not in person_by_key
-                ):
+                if child_row.parent_person_key not in person_by_key or child_row.child_person_key not in person_by_key:
                     continue
 
                 parent = person_by_key[child_row.parent_person_key]
@@ -357,6 +353,20 @@ class ExcelImportService:
 
         session.add(import_job)
         await session.flush()
+
+        imports_repository = ImportsRepository(session)
+
+        for error in errors:
+            await imports_repository.add_error(
+                import_job_id=import_job.id,
+                error_code=error.error_code,
+                error_message=error.error_message,
+                sheet_name=error.sheet_name,
+                row_number=error.row_number,
+                column_name=error.column_name,
+                suggested_fix=error.suggested_fix,
+            )
+
         await session.refresh(import_job)
 
         return import_job
@@ -386,16 +396,9 @@ class ExcelImportService:
         expected_headers: list[str],
         parsed: ParsedExcelImport,
     ) -> dict[str, int]:
-        actual_headers = [
-            str(cell.value).strip() if cell.value is not None else ""
-            for cell in worksheet[1]
-        ]
+        actual_headers = [str(cell.value).strip() if cell.value is not None else "" for cell in worksheet[1]]
 
-        header_map = {
-            header: index + 1
-            for index, header in enumerate(actual_headers)
-            if header
-        }
+        header_map = {header: index + 1 for index, header in enumerate(actual_headers) if header}
 
         for expected_header in expected_headers:
             if expected_header not in header_map:

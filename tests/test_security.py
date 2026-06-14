@@ -68,7 +68,7 @@ def test_backup_upload_validation_rejects_large_file() -> None:
 
 
 def test_formula_detection_and_escape() -> None:
-    assert SecurityService.is_formula_like("=HYPERLINK(\"x\")") is True
+    assert SecurityService.is_formula_like('=HYPERLINK("x")') is True
     assert SecurityService.is_formula_like("+SUM(A1:A2)") is True
     assert SecurityService.is_formula_like("normal text") is False
     assert SecurityService.escape_formula_like("@username") == "'@username"

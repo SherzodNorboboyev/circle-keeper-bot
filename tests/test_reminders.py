@@ -165,13 +165,16 @@ async def test_duplicate_reminder_log_idempotency(sqlite_session: AsyncSession) 
 
     assert first_log is not None
     assert second_log is None
-    assert await repository.log_exists(
-        user_id=user_id,
-        person_id=person.id,
-        event_date=date(2026, 4, 21),
-        reminder_type="birthday",
-        days_before=1,
-    ) is True
+    assert (
+        await repository.log_exists(
+            user_id=user_id,
+            person_id=person.id,
+            event_date=date(2026, 4, 21),
+            reminder_type="birthday",
+            days_before=1,
+        )
+        is True
+    )
 
 
 async def test_person_soft_delete_reminder_disable(sqlite_session: AsyncSession) -> None:

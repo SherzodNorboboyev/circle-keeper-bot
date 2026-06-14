@@ -3,7 +3,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import UTC, date, datetime, timedelta
 from html import escape
-from typing import Any
 from zoneinfo import ZoneInfo
 
 from aiogram import Bot
@@ -11,7 +10,7 @@ from loguru import logger
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.db.models import Person, Reminder, User
+from app.db.models import Person, Reminder
 from app.db.repositories.reminders import DueBirthdayReminder, RemindersRepository
 from app.db.repositories.users import UserRepository
 from app.services.i18n import I18nService
@@ -226,11 +225,7 @@ class ReminderService:
             now_utc=now_utc,
         )
 
-        return [
-            item
-            for item in items
-            if item.days_until == offset_days
-        ]
+        return [item for item in items if item.days_until == offset_days]
 
     def build_birthday_message(
         self,

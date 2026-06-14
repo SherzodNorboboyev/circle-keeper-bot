@@ -5,8 +5,8 @@ from typing import Any
 
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship as orm_relationship
-
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy.orm import relationship as orm_relationship
 
 SUPPORTED_LANGUAGES = ("uz", "ru", "en")
 
@@ -367,7 +367,9 @@ class Reminder(TimestampMixin, Base):
     )
     person_id: Mapped[int] = mapped_column(bigint_type(), nullable=False)
 
-    reminder_type: Mapped[str] = mapped_column(sa.String(50), nullable=False, default="birthday", server_default="birthday")
+    reminder_type: Mapped[str] = mapped_column(
+        sa.String(50), nullable=False, default="birthday", server_default="birthday"
+    )
     days_before: Mapped[int] = mapped_column(sa.SmallInteger, nullable=False, default=1, server_default="1")
     remind_time_local: Mapped[time] = mapped_column(
         sa.Time(),

@@ -49,10 +49,7 @@ class SettingsRepository:
 
         rows = list(result.scalars().all())
 
-        return {
-            row.key: self.unwrap_value(row.value)
-            for row in rows
-        }
+        return {row.key: self.unwrap_value(row.value) for row in rows}
 
     async def set_setting(
         self,

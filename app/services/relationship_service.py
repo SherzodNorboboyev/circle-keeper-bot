@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from datetime import date, datetime
 from typing import Any
 
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.models import RELATIONSHIP_TYPES, Person, Relationship
@@ -11,7 +12,6 @@ from app.db.repositories.people import PeopleRepository
 from app.db.repositories.relationships import RelationshipsRepository
 from app.services.i18n import I18nService
 from app.services.people_service import PeopleService
-
 
 SYMMETRIC_RELATIONSHIP_TYPES = {
     "sibling",
@@ -84,16 +84,19 @@ class RelationshipService:
 
         repository = RelationshipsRepository(session)
 
-        return await repository.create_relationship(
-            user_id=user_id,
-            from_person_id=prepared_data["from_person_id"],
-            to_person_id=prepared_data["to_person_id"],
-            relationship_type=prepared_data["relationship_type"],
-            custom_label=prepared_data["custom_label"],
-            note=prepared_data["note"],
-            is_bidirectional=prepared_data["is_bidirectional"],
-            reverse_relationship_type=prepared_data["reverse_relationship_type"],
-        )
+        try:
+            return await repository.create_relationship(
+                user_id=user_id,
+                from_person_id=prepared_data["from_person_id"],
+                to_person_id=prepared_data["to_person_id"],
+                relationship_type=prepared_data["relationship_type"],
+                custom_label=prepared_data["custom_label"],
+                note=prepared_data["note"],
+                is_bidirectional=prepared_data["is_bidirectional"],
+                reverse_relationship_type=prepared_data["reverse_relationship_type"],
+            )
+        except IntegrityError as exc:
+            raise RelationshipValidationError(message_key="relationship.duplicate") from exc
 
     async def prepare_create_data(
         self,

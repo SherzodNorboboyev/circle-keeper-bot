@@ -6,7 +6,7 @@ from typing import Any
 from aiogram import F, Router
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
-from aiogram.types import CallbackQuery, Message, ReplyKeyboardRemove
+from aiogram.types import CallbackQuery, Message
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.bot.keyboards.main_menu import main_menu_keyboard
@@ -1049,15 +1049,23 @@ async def build_relationship_list_items(
         if from_person is None or to_person is None:
             continue
 
-        label = relationship.custom_label if relationship.relationship_type == "custom" and relationship.custom_label else i18n.t(
-            f"relationship.labels.{relationship.relationship_type}",
-            lang=lang,
+        label = (
+            relationship.custom_label
+            if relationship.relationship_type == "custom" and relationship.custom_label
+            else i18n.t(
+                f"relationship.labels.{relationship.relationship_type}",
+                lang=lang,
+            )
         )
+
+        from_name = people_service.format_full_name(from_person)
+        to_name = people_service.format_full_name(to_person)
+        relationship_text = f"{from_name} — {label} — {to_name}"
 
         items.append(
             (
                 relationship.id,
-                f"{people_service.format_full_name(from_person)} — {label} — {people_service.format_full_name(to_person)}",
+                relationship_text,
             ),
         )
 
@@ -1086,9 +1094,13 @@ async def render_relationship_preview(
     from_name = people_service.format_full_name(from_person) if from_person else "—"
     to_name = people_service.format_full_name(to_person) if to_person else "—"
 
-    relationship_label = data["custom_label"] if data["relationship_type"] == "custom" else i18n.t(
-        f"relationship.labels.{data['relationship_type']}",
-        lang=lang,
+    relationship_label = (
+        data["custom_label"]
+        if data["relationship_type"] == "custom"
+        else i18n.t(
+            f"relationship.labels.{data['relationship_type']}",
+            lang=lang,
+        )
     )
     reverse_label = "—"
 
@@ -1105,7 +1117,9 @@ async def render_relationship_preview(
         to_person=to_name,
         relationship_type=relationship_label,
         custom_label=data.get("custom_label") or "—",
-        is_bidirectional=i18n.t("common.yes", lang=lang) if data.get("is_bidirectional") else i18n.t("common.no", lang=lang),
+        is_bidirectional=(
+            i18n.t("common.yes", lang=lang) if data.get("is_bidirectional") else i18n.t("common.no", lang=lang)
+        ),
         reverse_relationship_type=reverse_label,
         note=data.get("note") or "—",
     )
@@ -1130,9 +1144,13 @@ async def render_relationship_view(
         person_id=relationship.to_person_id,
     )
 
-    relationship_label = relationship.custom_label if relationship.relationship_type == "custom" and relationship.custom_label else i18n.t(
-        f"relationship.labels.{relationship.relationship_type}",
-        lang=lang,
+    relationship_label = (
+        relationship.custom_label
+        if relationship.relationship_type == "custom" and relationship.custom_label
+        else i18n.t(
+            f"relationship.labels.{relationship.relationship_type}",
+            lang=lang,
+        )
     )
 
     reverse_label = "—"
@@ -1150,7 +1168,9 @@ async def render_relationship_view(
         to_person=people_service.format_full_name(to_person) if to_person else "—",
         relationship_type=relationship_label,
         custom_label=relationship.custom_label or "—",
-        is_bidirectional=i18n.t("common.yes", lang=lang) if relationship.is_bidirectional else i18n.t("common.no", lang=lang),
+        is_bidirectional=(
+            i18n.t("common.yes", lang=lang) if relationship.is_bidirectional else i18n.t("common.no", lang=lang)
+        ),
         reverse_relationship_type=reverse_label,
         note=relationship.note or "—",
     )

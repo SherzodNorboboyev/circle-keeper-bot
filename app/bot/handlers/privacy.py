@@ -6,7 +6,6 @@ from aiogram.types import Message
 
 from app.services.i18n import I18nService
 
-
 router = Router(name="privacy")
 
 

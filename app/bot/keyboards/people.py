@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Iterable
 from math import ceil
-from typing import Iterable
 
 from aiogram.types import (
     InlineKeyboardButton,
@@ -79,7 +79,7 @@ def category_keyboard(
     for index in range(0, len(categories), 2):
         row: list[InlineKeyboardButton] = []
 
-        for category in categories[index:index + 2]:
+        for category in categories[index : index + 2]:
             row.append(
                 InlineKeyboardButton(
                     text=i18n.t(f"person.category.{category}", lang=lang),

@@ -8,23 +8,18 @@
   "menu.backup": "Backup / Export",
   "menu.settings": "Settings",
   "menu.change_language": "Change language",
-
   "start.choose_language": "Choose a language:",
   "start.welcome": "Hello, {first_name}! Choose a section from the main menu.",
   "language.changed": "Language changed.",
-
   "help.text": "This bot helps you manage your personal networking database: people profiles, relationships, birthday reminders, backup, and Excel import/export. Available commands: /start, /help, /language, /add, /list, /search, /view, /edit, /delete, /relationships, /add_child, /birthdays, /settings, /cancel.",
-
   "error.required_field": "This field is required.",
   "error.cancelled": "Action cancelled.",
-
   "common.cancel": "Cancel",
   "common.back": "Back",
   "common.skip": "Skip",
   "common.save": "Save",
   "common.yes": "Yes",
   "common.no": "No",
-
   "person.ask_first_name": "First name?",
   "person.ask_last_name": "Last name?",
   "person.ask_middle_name": "Middle name?",
@@ -36,7 +31,6 @@
   "person.ask_note": "Would you like to add a short note?",
   "person.ask_relationship_offer": "Would you like to link this person to another person in the relationships section?",
   "person.ask_gender": "Choose gender.",
-
   "person.preview": "Check the data:\n\n{preview}",
   "person.saved": "Person saved.",
   "person.updated": "Person updated.",
@@ -46,20 +40,17 @@
   "person.search_prompt": "Send a search query.",
   "person.search_empty": "Nothing found for this search query.",
   "person.search_results": "Search results: “{query}”",
-
   "person.invalid_birth_date": "Invalid birth date. Formats: 1995-04-21, 04-21, 21.04.1995, 21.04",
   "person.invalid_category": "Invalid category.",
   "person.invalid_gender": "Invalid gender value.",
   "person.invalid_field": "Invalid editable field.",
   "person.custom_category_required": "Custom category name is required.",
-
   "person.select_to_view": "Select a person to view.",
   "person.select_to_edit": "Select a person to edit.",
   "person.select_to_delete": "Select a person to delete.",
   "person.select_field": "Select a field to edit for {full_name}.",
   "person.select_field_again": "Select a field to edit.",
   "person.input_new_value": "{field}\nCurrent value: {current_value}\n\nSend a new value.",
-
   "person.edit_preview_title": "Edit preview:",
   "person.editing_person": "Person: {full_name}",
   "person.delete_confirm": "Soft delete {full_name}? Active relationships connected to this person will also be soft deleted, and reminders will be disabled.",
@@ -71,12 +62,10 @@
   "person.relationships_title": "Relationships:",
   "person.relationships_placeholder": "Relationships: will be added in part 3.",
   "person.add_child_placeholder": "Add child flow will be connected in part 3.",
-
   "person.button.edit": "Edit",
   "person.button.delete": "Delete",
   "person.button.add_relationship": "Add relationship",
   "person.button.add_child": "Add child",
-
   "person.field.first_name": "First name",
   "person.field.last_name": "Last name",
   "person.field.middle_name": "Middle name",
@@ -92,12 +81,10 @@
   "person.field.location": "Location",
   "person.field.workplace": "Workplace",
   "person.field.education_place": "Education place",
-
   "person.gender.male": "Male",
   "person.gender.female": "Female",
   "person.gender.other": "Other",
   "person.gender.unknown": "Unknown",
-
   "person.category.father": "Father",
   "person.category.mother": "Mother",
   "person.category.parent": "Parent",
@@ -114,13 +101,11 @@
   "person.category.spouse": "Spouse",
   "person.category.other": "Other",
   "person.category.custom": "Custom",
-
   "relationship.menu": "Relationships section. Choose whether to create a new relationship or view existing relationships.",
   "relationship.button.create": "Add relationship",
   "relationship.button.list": "Relationships list",
   "relationship.button.delete": "Delete relationship",
   "relationship.button.back_to_list": "Back to list",
-
   "relationship.select_from": "From whom?",
   "relationship.select_to": "To whom?",
   "relationship.selected_from": "First person: {full_name}",
@@ -131,7 +116,6 @@
   "relationship.ask_note": "Any note for this relationship?",
   "relationship.ask_direction": "Choose relationship direction.",
   "relationship.ask_reverse_type": "Choose reverse relationship type.",
-
   "relationship.preview": "Relationship preview:\n\nFrom: {from_person}\nTo: {to_person}\nType: {relationship_type}\nCustom label: {custom_label}\nBidirectional: {is_bidirectional}\nReverse type: {reverse_relationship_type}\nNote: {note}",
   "relationship.created": "Relationship created.",
   "relationship.deleted": "Relationship soft deleted.",
@@ -147,11 +131,9 @@
   "relationship.delete_confirm": "Soft delete this relationship?",
   "relationship.view": "Relationship:\n\nFrom: {from_person}\nTo: {to_person}\nType: {relationship_type}\nCustom label: {custom_label}\nBidirectional: {is_bidirectional}\nReverse type: {reverse_relationship_type}\nNote: {note}",
   "relationship.profile_line": "- {full_name} — {label}",
-
   "relationship.direction.bidirectional": "Bidirectional",
   "relationship.direction.directed": "Directed",
   "relationship.reverse.none": "No reverse type",
-
   "relationship.labels.parent": "parent",
   "relationship.labels.child": "child",
   "relationship.labels.sibling": "sibling",
@@ -163,11 +145,9 @@
   "relationship.labels.relative": "relative",
   "relationship.labels.acquaintance": "acquaintance",
   "relationship.labels.custom": "custom relationship",
-
   "relationship.parent_roles.father": "father",
   "relationship.parent_roles.mother": "mother",
   "relationship.parent_roles.parent": "parent",
-
   "child.select_parent": "Select the parent person to add a child.",
   "child.selected_parent": "Parent: {full_name}",
   "child.ask_first_name": "Child first name?",
@@ -177,7 +157,6 @@
   "child.ask_note": "Any short note about the child?",
   "child.preview": "Child preview:\n\nParent: {parent_full_name}\nFirst name: {first_name}\nLast name: {last_name}\nBirthday: {birth_date}\nGender: {gender}\nNote: {note}",
   "child.created": "{child_full_name} was created as a separate person and linked to {parent_full_name} with a parent-child relationship.",
-
   "reminder.default_created": "{count} birthday reminder(s) created.",
   "reminder.birthday_tomorrow": "Reminder: tomorrow is {full_name}’s birthday.",
   "reminder.birthday_tomorrow_with_age": "Reminder: tomorrow {full_name} turns {age}.",
@@ -185,7 +164,6 @@
   "reminder.birthday_today_with_age": "Reminder: today {full_name} turns {age}.",
   "reminder.birthday_upcoming": "Reminder: {full_name}’s birthday is in {days} days.",
   "reminder.birthday_upcoming_with_age": "Reminder: {full_name} turns {age} in {days} days.",
-
   "birthdays.menu": "Choose a birthday period.",
   "birthdays.empty": "No birthdays in this period.",
   "birthdays.upcoming_title": "Birthdays in the next 7 days:",
@@ -199,7 +177,6 @@
   "birthdays.button.next_7": "7 days",
   "birthdays.button.next_30": "30 days",
   "birthdays.button.periods": "Choose period",
-
   "settings.title": "Settings:\n\nTimezone: {timezone}\nReminder time: {reminder_time}\nDays before birthday: {days_before}\nOn-birthday reminder: {birthday_on_day_enabled}",
   "settings.timezone": "Timezone",
   "settings.reminder_time": "Reminder time",
@@ -218,18 +195,15 @@
   "settings.enable_on_day": "Enable on-day reminder",
   "settings.disable_on_day": "Disable on-day reminder",
   "settings.language_hint": "Use /language to change language.",
-  
   "backup.export_choose_format": "Choose backup format.",
   "backup.export_success": "Backup sent: {filename}",
   "backup.export_failed": "Failed to send backup.",
   "backup.auto_failed": "Failed to send backup. Your data was saved in the database, but the backup file was not sent.",
-
   "restore.ask_file": "Send a JSON backup file.",
   "restore.invalid_file": "Invalid backup file. Only a .json file with valid schema_version and checksum is accepted.",
   "restore.preview": "Restore preview:\n\nBackup date: {generated_at}\nPeople: {people_count}\nRelationships: {relationships_count}\nReminders: {reminders_count}\nSchema version: {schema_version}\n\nRestore mode: replace_all",
   "restore.completed": "Restore completed.\n\nPeople: {people_count}\nRelationships: {relationships_count}\nReminders: {reminders_count}",
   "restore.cancelled": "Restore cancelled.",
-
   "excel.template_ready": "Excel import template is ready.",
   "excel.ask_file": "Send the completed .xlsx file.",
   "excel.invalid_extension": "Only .xlsx files are accepted.",
@@ -240,7 +214,6 @@
   "excel.error_report_ready": "Import error report is ready.",
   "excel.export_ready": "Excel export is ready.",
   "excel.no_data": "There is no active data to export.",
-
   "import.errors.REQUIRED_FIELD_MISSING": "Required field is missing.",
   "import.errors.DUPLICATE_PERSON_KEY": "person_key is duplicated.",
   "import.errors.INVALID_DATE_FORMAT": "Invalid date format.",
@@ -252,16 +225,16 @@
   "import.errors.INVALID_CHILD_RELATIONSHIP": "Parent and child cannot be the same person.",
   "import.errors.FORMULA_NOT_ALLOWED": "Formula or formula-like text is not allowed.",
   "import.errors.DUPLICATE_PERSON_POSSIBLE": "Possible duplicate person detected.",
-
   "hello": "Hello",
   "welcome": "Welcome",
   "missing.key": "Translation not found",
-
   "admin.forbidden": "This command is available only to admins.",
   "admin.stats": "Admin statistics:\n\nUsers: {total_users}\nActive users: {active_users}\nTotal people: {total_people}\nActive people: {total_active_people}\nTotal relationships: {total_relationships}\nActive relationships: {total_active_relationships}\nFailed backups: {failed_backups}\nFailed imports: {failed_imports}\nRecent import jobs: {recent_imports}\nReminder sent: {reminder_sent_count}\nReminder failed: {reminder_failed_count}",
-
   "security.forbidden": "You are not allowed to perform this action.",
   "privacy.delete_my_data_coming_soon": "This feature will be added in the next version. For now, use /delete to remove individual records.",
-
-  "error.unexpected": "An unexpected error occurred. Please try again later."
+  "error.unexpected": "An unexpected error occurred. Please try again later.",
+  "backup.format.json": "JSON backup",
+  "backup.format.sqlite": "SQLite backup",
+  "restore.action.replace_all": "Replace all",
+  "excel.action.import": "Import"
 }

@@ -8,7 +8,6 @@ from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 from pydantic import Field, SecretStr, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-
 SupportedLanguage = Literal["uz", "ru", "en"]
 Environment = Literal["development", "test", "production"]
 
@@ -83,11 +82,7 @@ class Settings(BaseSettings):
                 parsed = json.loads(raw_value)
                 return tuple(int(item) for item in parsed)
 
-            return tuple(
-                int(item.strip())
-                for item in raw_value.split(",")
-                if item.strip()
-            )
+            return tuple(int(item.strip()) for item in raw_value.split(",") if item.strip())
 
         if isinstance(value, list | tuple | set):
             return tuple(int(item) for item in value)

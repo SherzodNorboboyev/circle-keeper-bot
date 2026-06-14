@@ -6,7 +6,6 @@ from typing import Any
 
 from loguru import logger
 
-
 SUPPORTED_LANGUAGES = frozenset({"uz", "ru", "en"})
 
 
@@ -32,10 +31,7 @@ class I18nService:
             with path.open("r", encoding="utf-8") as file:
                 raw_data = json.load(file)
 
-            loaded_translations[lang] = {
-                str(key): str(value)
-                for key, value in raw_data.items()
-            }
+            loaded_translations[lang] = {str(key): str(value) for key, value in raw_data.items()}
 
         self._translations = loaded_translations
 

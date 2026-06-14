@@ -71,7 +71,4 @@ class AdminService:
 
     async def _group_count(self, statement) -> dict[str, int]:
         result = await self.session.execute(statement)
-        return {
-            str(status): int(count)
-            for status, count in result.all()
-        }
+        return {str(status): int(count) for status, count in result.all()}

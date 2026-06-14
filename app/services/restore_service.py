@@ -10,7 +10,7 @@ from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.models import AuditLog, Person, Relationship, Reminder, ReminderLog, UserSetting
-from app.services.backup_service import BackupService, SCHEMA_VERSION
+from app.services.backup_service import SCHEMA_VERSION, BackupService
 
 
 @dataclass(frozen=True)

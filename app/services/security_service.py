@@ -8,7 +8,6 @@ from sqlalchemy.engine.url import make_url
 
 from app.config import Settings, get_settings
 
-
 FORMULA_PREFIXES = ("=", "+", "-", "@")
 
 

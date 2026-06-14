@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from io import BytesIO
+from typing import ClassVar
 
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill
@@ -19,11 +20,11 @@ class ExcelTemplateFile:
 
 
 class ExcelTemplateService:
-    filename = "networking_import_template.xlsx"
-    template_version = "1.0.0"
-    schema_version = "1.0.0"
+    filename: ClassVar[str] = "networking_import_template.xlsx"
+    template_version: ClassVar[str] = "1.0.0"
+    schema_version: ClassVar[str] = "1.0.0"
 
-    people_headers = [
+    people_headers: ClassVar[list[str]] = [
         "person_key",
         "first_name",
         "last_name",
@@ -42,7 +43,7 @@ class ExcelTemplateService:
         "workplace",
         "education_place",
     ]
-    relationship_headers = [
+    relationship_headers: ClassVar[list[str]] = [
         "from_person_key",
         "to_person_key",
         "relationship_type",
@@ -50,13 +51,13 @@ class ExcelTemplateService:
         "note",
         "is_bidirectional",
     ]
-    children_headers = [
+    children_headers: ClassVar[list[str]] = [
         "parent_person_key",
         "child_person_key",
         "parent_role",
         "note",
     ]
-    import_error_headers = [
+    import_error_headers: ClassVar[list[str]] = [
         "row_number",
         "sheet_name",
         "column_name",

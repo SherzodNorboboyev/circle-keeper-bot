@@ -9,7 +9,7 @@ from app.bot.keyboards.inline import language_selection_keyboard
 from app.bot.keyboards.main_menu import main_menu_keyboard
 from app.db.models import User
 from app.db.repositories.users import UserRepository
-from app.services.i18n import I18nService, SUPPORTED_LANGUAGES
+from app.services.i18n import SUPPORTED_LANGUAGES, I18nService
 
 router = Router(name="language")
 

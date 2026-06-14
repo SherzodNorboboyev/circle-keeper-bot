@@ -43,9 +43,11 @@ class BackupDebounceQueue:
         if existing_task is not None and not existing_task.done():
             existing_task.cancel()
 
-        self._tasks[user_id] = asyncio.create_task(
-            self._run_after_delay(user_id=user_id),
+        task = asyncio.create_task(self._run_after_delay(user_id=user_id))
+        task.add_done_callback(
+            lambda completed_task, task_user_id=user_id: self._tasks.pop(task_user_id, None),
         )
+        self._tasks[user_id] = task
 
         logger.bind(
             user_id=user_id,
@@ -54,11 +56,7 @@ class BackupDebounceQueue:
         ).info("backup_enqueued")
 
     async def shutdown(self) -> None:
-        tasks = [
-            task
-            for task in self._tasks.values()
-            if not task.done()
-        ]
+        tasks = [task for task in self._tasks.values() if not task.done()]
 
         for task in tasks:
             task.cancel()
